@@ -194,3 +194,7 @@ lazy = true
   [privacy.youtube]
     disable = false
     privacyEnhanced = false
+
+########################### Robots.txt ##########################
+# See https://gohugo.io/templates/robots/
+enableRobotsTXT = true
