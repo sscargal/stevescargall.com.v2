@@ -6,6 +6,7 @@ categories:
   - "how-to"
   - "linux"
 image: "images/PCI-Express-slots-on-motherboard.jpeg"
+author: Steve Scargall
 ---
 
 When working with CXL Type 3 Memory Expander endpoints, it's nice to know which CPU Socket owns the root complex for the endpoint. This is very useful for memory tiering solutions where we want to keep the execution of application processes and threads 'local' to the memory.

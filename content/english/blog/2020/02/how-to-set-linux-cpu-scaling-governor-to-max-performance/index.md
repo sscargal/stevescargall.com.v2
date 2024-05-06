@@ -11,6 +11,7 @@ tags:
   - "performance"
   - "powersave"
 image: "images/pexels-photo-257904.jpeg"
+author: Steve Scargall
 ---
 
 The majority of modern processors are capable of operating in a number of different clock frequency and voltage configurations, often referred to as Operating Performance Points or P-states (in ACPI terminology). As a rule, the higher the clock frequency and the higher the voltage, the more instructions can be retired by the CPU over a unit of time, but also the higher the clock frequency and the higher the voltage, the more energy is consumed over a unit of time (or the more power is drawn) by the CPU in the given P-state. Therefore there is a natural trade-off between the CPU capacity (the number of instructions that can be executed over a unit of time) and the power drawn by the CPU.

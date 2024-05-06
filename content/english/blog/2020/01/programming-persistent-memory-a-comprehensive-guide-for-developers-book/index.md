@@ -15,6 +15,7 @@ tags:
   - "pmem"
   - "programming"
 image: "images/blog-header-1280x536px.jpg"
+author: Steve Scargall
 ---
 
 After many months of hard work by everyone involved, I'm very pleased to announce that the book "**Programming Persistent Memory: A Comprehensive Guide for Developers**" is now available for download in digital PDF & ePUB formats from [https://pmem.io/book](https://pmem.io/book), and Kindle & paperback through [Amazon](https://www.apress.com/us/book/9781484249314).

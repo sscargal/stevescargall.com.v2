@@ -13,6 +13,7 @@ tags:
   - "persistent-memory"
   - "pmem"
 image: "images/pexels-photo-577585.jpeg"
+author: Steve Scargall
 ---
 
 The [ipmctl](https://github.com/intel/ipmctl) utility is used for configuring and managing Intel Optane Persistent Memory modules (DCPMM/PMem). It supports the functionality to:

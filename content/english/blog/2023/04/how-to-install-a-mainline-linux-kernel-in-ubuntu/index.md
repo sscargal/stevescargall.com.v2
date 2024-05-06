@@ -12,6 +12,7 @@ categories:
   - linux
   - how to
 image: "images/_6bd5d195-ab4b-44d7-b628-49ce6aa7ca59-min.jpeg"
+author: Steve Scargall
 ---
 
 By default, Ubuntu systems run with the Ubuntu kernels provided by the Ubuntu repositories. To get unmodified upstream kernels that have new features or to confirm that upstream has fixed a specific issue, we often need to install the mainline Kernel. The mainline kernel is the most recent version of the Linux kernel released by the Linux Kernel Organization. It undergoes several stages of development, including merge windows, release candidates, and final releases. Mainline kernels are designed to offer the latest features and improvements, making them attractive to developers and power users. [Kernel.org](https://www.kernel.org/) lists the available Kernel versions. 

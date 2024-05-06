@@ -14,6 +14,7 @@ tags:
   - "pmem"
   - "qemu"
 image: "images/CXL_Logo.jpg"
+author: Steve Scargall
 ---
 
 ## What is CXL?

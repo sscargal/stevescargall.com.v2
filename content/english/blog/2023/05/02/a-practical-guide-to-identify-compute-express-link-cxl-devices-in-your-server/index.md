@@ -18,6 +18,8 @@ categories = ['how to', 'linux']
 
 # Featured Image
 image = 'server_featured_image_900x600-min.jpeg'
+
+author = "Steve Scargall"
 +++
 
 

@@ -15,6 +15,7 @@ tags:
   - "persistent-memory"
   - "pmem"
 image: "images/disc-reader-reading-arm-hard-drive.jpg"
+author: Steve Scargall
 ---
 
 The Linux 'dm-writecache' target allows for writeback caching of newly written data to an SSD or NVMe using persistent memory will achieve much better performance in Linux Kernel 5.8.

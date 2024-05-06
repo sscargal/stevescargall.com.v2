@@ -8,6 +8,7 @@ tags:
   - "custom-kernel"
   - "kernel"
 image: "images/pexels-photo-97077.jpeg"
+author: Steve Scargall
 ---
 
 I typically keep my Fedora system current, updating it once every week or two. More recently, I wanted to test the [Idle Page Tracking](https://www.kernel.org/doc/html/latest/admin-guide/mm/idle_page_tracking.html#) feature, but this wasn't enabled in the default kernel provided by Fedora.

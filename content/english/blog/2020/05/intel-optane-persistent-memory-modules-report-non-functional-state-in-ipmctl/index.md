@@ -10,6 +10,7 @@ tags:
   - "optane"
   - "persistent-memory"
   - "pmem"
+author: Steve Scargall
 ---
 
 ## Issue

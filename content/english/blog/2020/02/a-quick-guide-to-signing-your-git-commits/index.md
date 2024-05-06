@@ -7,6 +7,7 @@ tags:
   - "git"
   - "gpg"
 image: "images/git-gpg.png"
+author: Steve Scargall
 ---
 
 It is important to sign Git commits for your source code to avoid the code being compromised and to confirm to the repository gatekeeper that you are who you say you are. Signing guarantees that my code is my work, it is my copyright and nobody else can fake it. This guide provides the necessary steps to creating private & public keys so you can sign your Git commits.

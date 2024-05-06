@@ -6,6 +6,7 @@ categories:
   - "linux"
   - "performance"
 image: "images/aptira_grafana_prometheus_training-1.png"
+author: Steve Scargall
 ---
 
 In a previous article, I showed [How To Install Prometheus and Grafana on Fedora Server](https://stevescargall.com/2020/05/13/how-to-install-prometheus-and-grafana-on-fedora-server/). This article demonstrates how to use the open-source [Process Counter Monitor](https://github.com/opcm/pcm) (PCM) utility to collect DRAM and Intel® Optane™ Persistent Memory statistics, and visualize the data in Grafana.

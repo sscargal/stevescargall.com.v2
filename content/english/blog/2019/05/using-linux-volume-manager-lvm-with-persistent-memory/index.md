@@ -12,6 +12,7 @@ tags:
   - "pmdk"
   - "pmem"
 image: "images/lvm_and_persistent_memory-1.png"
+author: Steve Scargall
 ---
 
 In this article, we show how to use the Linux Volume Manager (LVM) to create concatenated, striped, and mirrored logical volumes using persistent memory modules as the backing storage device. Specifically, we will be using the [Intel® Optane™ Persistent Memory Modules](https://software.intel.com/en-us/persistent-memory) on a two socket system with Intel® Cascade Lake Xeon® CPUs, also referred to as 2nd Generation Intel® Xeon® Scalable Processors.

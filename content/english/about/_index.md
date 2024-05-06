@@ -2,7 +2,7 @@
 title: "Hey there! I'm Steve Scargall"
 meta_title: "About"
 description: "About Steve Scargall"
-image: "/images/avatar.png"
+image: "images/profile_photo.jpeg"
 draft: false
 ---
 

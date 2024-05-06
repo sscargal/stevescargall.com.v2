@@ -11,6 +11,7 @@ tags:
   - "server"
   - "window"
 image: "images/Windows-Linux-USB.png"
+author: Steve Scargall
 ---
 
 In this tutorial, I am going to show you how to create a Windows Server 2019 bootable USB in Linux, though any Windows version will work. I am using Fedora 30 for this tutorial but the steps should be valid for other Linux distributions as well.

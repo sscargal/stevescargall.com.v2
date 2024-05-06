@@ -1,7 +1,7 @@
 ---
 title: Steve Scargall
 email: donotreply@stevescargall.com
-image: "/images/avatar.png"
+image: "/images/profile_photo.jpeg"
 description: Steve Scargall
 social:
   - name: github

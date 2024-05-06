@@ -8,6 +8,7 @@ tags:
   - "performance"
   - "prometheus"
 image: "images/aptira_grafana_prometheus_training.png"
+author: Steve Scargall
 ---
 
 \[Updated\] This article was updated on 03/13/2021 using Fedora Server 33, [Prometheus](https://prometheus.io/download/) v2.25.0, [Grafana](https://grafana.com/) v7.4.3, and [Node Exporter](https://github.com/prometheus/node_exporter) v1.1.2.
