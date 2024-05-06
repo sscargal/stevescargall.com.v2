@@ -1,9 +1,9 @@
 +++
 # Post Title - Auto-generated from the file name
-title = "MAME Arcade Machine"
+title = "From Pixelated Memories to Real Pixels: Building My Dream Arcade Machine"
 
 # Post creation date
-date = 2023-01-25T19:54:35Z
+date = 2014-10-12T00:00:00Z
 
 # Post is a Draft = True|False
 draft = false
@@ -17,16 +17,47 @@ tags = ["MAME","Arcade"]
 categories = ["Projects"]
 
 # Featured Image
-image = 'server_image_900x600-min.jpeg'
+image = 'IMG_20160503_201239.jpg'
 +++
 
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pharetra sit amet aliquam id diam. Ipsum a arcu cursus vitae. Ut sem viverra aliquet eget sit. Sed augue lacus viverra vitae congue eu consequat ac. Pellentesque eu tincidunt tortor aliquam nulla facilisi cras fermentum odio. Phasellus egestas tellus rutrum tellus. Maecenas pharetra convallis posuere morbi leo urna molestie at. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam etiam. Sed euismod nisi porta lorem.
+There's something undeniably special about classic arcade games. The vibrant lights, the thunderous bass of fighting games, the pure, unadulterated joy of a high score – it's an experience that just can't be replicated on a modern console.
 
-Orci phasellus egestas tellus rutrum tellus. Dictum at tempor commodo ullamcorper a. Lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor. Eget sit amet tellus cras adipiscing enim eu turpis egestas. A arcu cursus vitae congue mauris rhoncus aenean vel. Porttitor eget dolor morbi non arcu risus quis varius quam. Ullamcorper a lacus vestibulum sed arcu. Integer eget aliquet nibh praesent tristique magna. Augue ut lectus arcu bibendum at. Nulla porttitor massa id neque aliquam vestibulum morbi blandit cursus. Odio aenean sed adipiscing diam donec. Sit amet est placerat in egestas. Viverra nibh cras pulvinar mattis nunc sed. Nulla aliquet porttitor lacus luctus accumsan tortor posuere ac ut. Turpis in eu mi bibendum neque egestas congue.
+For years, I chased that nostalgia, feeding quarters into dusty machines at retro arcades. But what if I could bring that feeling home? That's the question that sparked this project: building my very own arcade machine from scratch.
 
-Arcu vitae elementum curabitur vitae nunc. Eget sit amet tellus cras adipiscing. Tellus mauris a diam maecenas. Hendrerit gravida rutrum quisque non tellus orci ac auctor. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Eget nulla facilisi etiam dignissim. Imperdiet sed euismod nisi porta lorem mollis aliquam ut. Sed libero enim sed faucibus turpis. Et netus et malesuada fames. Convallis tellus id interdum velit laoreet id. At varius vel pharetra vel turpis nunc eget. Nisl vel pretium lectus quam. Donec ultrices tincidunt arcu non sodales neque.
+## From Dream to Design
 
-Quis blandit turpis cursus in hac habitasse platea dictumst. Suspendisse interdum consectetur libero id faucibus. Habitant morbi tristique senectus et netus et. Sit amet commodo nulla facilisi nullam vehicula ipsum a arcu. Feugiat in fermentum posuere urna nec tincidunt praesent semper. Pellentesque habitant morbi tristique senectus et netus et. Morbi tristique senectus et netus et malesuada fames ac. Vulputate ut pharetra sit amet aliquam id. Ullamcorper a lacus vestibulum sed arcu non odio. Cursus sit amet dictum sit amet justo donec. Leo duis ut diam quam nulla porttitor. Habitant morbi tristique senectus et netus et.
+The first step was planning. I knew I wanted a versatile machine that could handle a wide range of games. Enter MAME (Multiple Arcade Machine Emulator), a fantastic emulator that allows you to play classic arcade titles on a PC. With a Windows gaming PC as the heart of the machine, I could play not just arcade games, but Atari, Commodore 64, Nintendo Entertainment System (NES), Sega Master System, even old Playstation titles! To tie it all together, I discovered [Maximus Arcade](https://maximus-arcade.com/), a beautiful user interface specifically designed for arcade cabinets. I tested several MAME front end's but ultimately chose Maximus Arcade for simplicity and its stunning visuals.
 
-Gravida in fermentum et sollicitudin ac. Mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Euismod in pellentesque massa placerat duis ultricies lacus sed. Viverra nibh cras pulvinar mattis nunc sed blandit libero. Amet mattis vulputate enim nulla aliquet porttitor lacus. Nibh ipsum consequat nisl vel pretium. Eleifend quam adipiscing vitae proin sagittis nisl. Pretium aenean pharetra magna ac placerat vestibulum lectus mauris. Hac habitasse platea dictumst vestibulum rhoncus est. Augue mauris augue neque gravida. Nunc consequat interdum varius sit amet mattis. Dolor purus non enim praesent. Blandit libero volutpat sed cras ornare arcu dui vivamus arcu. Leo vel fringilla est ullamcorper.
+{{< youtube-lite id="THV-30R3q6Q" class="mx-auto" width="600px" style="" attr="t=09" >}}
+
+[SketchUp](https://www.sketchup.com/en) made designing the cabinet very simple. After a few designs, I settled on this one:
+
+{{< slider dir="gallery_sketchup">}}
+
+## Building the Cabinet
+
+Next came the fun part: building the cabinet itself. I opted for MDF, a sturdy and relatively inexpensive, and easy to work with material. Using my SketchUp design, I meticulously hand-cut each piece. The joysticks, buttons, and even the coin door were all sourced from online retailers –  there's a thriving community dedicated to building arcade machines, which made finding parts surprisingly easy.
+
+{{< gallery dir="gallery_build">}}
+
+
+## The Art of the Arcade
+
+Of course, an arcade machine isn't complete without eye-catching artwork.  Since Bubble Bobble was a childhood favorite, I decided to design my own decals, complete with the iconic dragons Bub and Bob. After a marathon session in [Affinity Designer](https://affinity.serif.com/en-us/designer/), I had my masterpiece(s) that included the Marquee, Left, Right, and Controls art work. I sent my TIFF files to [Printmoz](https://www.printmoz.com/custom-decals) and the results were amazing!
+
+## Power Up!
+
+Finally, the moment of truth: putting it all together.  The first time I fired it up and the familiar MAME startup screen flickered to life, well, let's just say it was pure magic.
+
+{{< youtube-lite id="N3U6_dCU-JI" class="mx-auto" width="600px" style="" attr="" >}}
+
+## The Final Boss: Lessons Learned
+
+Building this machine was an amazing journey. It challenged me, pushed my creativity, and ultimately, brought back a flood of childhood memories.  Here are a few things I learned:
+
+- Planning is Key: Don't underestimate the power of a good design plan before diving in. 
+- Online Resources are Your Friend: The arcade-building community is vast and supportive. There are tons of tutorials and forums to help you along the way.
+- Embrace the Challenge: There will be bumps in the road, but troubleshooting and overcoming obstacles is part of the fun (and the reward)!
+
+If you've ever felt that pang of nostalgia for the golden age of arcades, I urge you to consider building your own machine. It's a rewarding experience that will bring years of enjoyment. Who knows, maybe you'll even design your own custom decals – after all, a real arcade machine deserves a splash of personality!
