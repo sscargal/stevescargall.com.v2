@@ -1,0 +1,74 @@
+############# English navigation ##############
+
+# main menu
+[[main]]
+name = "Home"
+pageRef = "/"
+weight = 1
+
+[[main]]
+name = "Blog"
+pageRef = "/blog"
+weight = 2
+
+[[main]]
+name = "Mad Lab"
+pageRef = "/projects"
+weight = 3
+
+[[main]]
+name = "Library"
+pageRef = "/books"
+weight = 4
+
+[[main]]
+name = "About Me"
+pageRef = "/about"
+weight = 5
+
+
+# [[main]]
+# weight = 4
+# name = "Pages"
+
+# [[main]]
+# parent = "Pages"
+# name = "Blog"
+# pageRef = "/blog"
+
+# [[main]]
+# parent = "Pages"
+# name = "Contact"
+# pageRef = "/contact"
+
+# [[main]]
+# parent = "Pages"
+# name = "Authors"
+# pageRef = "/authors"
+
+# [[main]]
+# parent = "Pages"
+# name = "Categories"
+# pageRef = "/categories"
+
+# [[main]]
+# parent = "Pages"
+# name = "404 Page"
+# pageRef = "/404"
+
+
+# footer menu
+[[footer]]
+name = "Cookie Policy"
+pageRef = "/cookie-policy"
+weight = 1
+
+# [[footer]]
+# name = "Elements"
+# pageRef = "/elements"
+# weight = 2
+
+[[footer]]
+name = "Privacy Policy"
+pageRef = "/privacy-policy"
+weight = 3

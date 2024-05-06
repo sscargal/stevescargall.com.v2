@@ -78,6 +78,7 @@ We have included almost everything you need to start your Hugo project. Let's se
 - [Github Actions](https://github.com/features/actions)
 - [Gitlab Ci](https://docs.gitlab.com/ee/ci/)
 - [AWS Amplify](https://aws.amazon.com/amplify/)
+- [Images](https://undraw.co/)
 
 ---
 
