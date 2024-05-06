@@ -26,7 +26,7 @@ git clone https://github.com/stevescargall/blog.git
 cd blog
 ```
 
-### 👉 Install Dependencies
+### Install or Update Dependencies
 
 Install all the dependencies using the following command.
 
@@ -34,7 +34,13 @@ Install all the dependencies using the following command.
 npm install
 ```
 
-### 👉 Development Command
+To update the dependencies, run:
+
+```bash
+npm update
+```
+
+### Development Command
 
 Start the development server using the following command.
 
@@ -49,3 +55,5 @@ hugo server --bind 0.0.0.0 --verbose --baseURL http://123.456.7.89 --theme hugop
 ```
 
 where the `baseURL` should be the IP Address or hostname of the remote host.
+
+Hugo runs on port 1313
