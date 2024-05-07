@@ -7,7 +7,7 @@
 {{ $pageLink := replace (replace $context.RelPermalink (add $pageLang "/") "") $base.Path "/" }}
 
 {{ if $context.IsTranslated }}
-  <select class="{{ $class }}" onchange="location = this.value">
+  <select class="{{ $class }}" onchange="location = {{ . | urlize | safeJS }}">
     {{ range $siteLanguages }}
       {{ if eq (string $pageLang) (string .Language) }}
         <option
