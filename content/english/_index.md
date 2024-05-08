@@ -52,4 +52,16 @@ features:
       enable: true
       label: "Access the Mad Lab"
       link: "/projects"
+
+  - title: "Conferences and Events"
+    image: "/images/conference.png"
+    content: "A showcase of my active participation in various prestigious conferences and events."
+    bulletpoints:
+      - "Speaker: See my compelling presentations I've delivered on transformative industry topics."
+      - "Panel Contributions: Gain insights from the panel discussions where I've shared the stage with renowned experts."
+      - "Innovative Demos: Explore the interactive and innovative demos I've presented at company booths, demonstrating cutting-edge solutions."
+    button:
+      enable: true
+      label: "Explore Conferences & Events"
+      link: "/events"
 ---
