@@ -12,19 +12,24 @@ pageRef = "/blog"
 weight = 2
 
 [[main]]
+name = "Conferences & Events"
+pageRef = "/events"
+weight = 3
+
+[[main]]
 name = "Mad Lab"
 pageRef = "/projects"
-weight = 3
+weight = 4
 
 [[main]]
 name = "Library"
 pageRef = "/books"
-weight = 4
+weight = 5
 
 [[main]]
 name = "About Me"
 pageRef = "/about"
-weight = 5
+weight = 6
 
 
 # [[main]]
