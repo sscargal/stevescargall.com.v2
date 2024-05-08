@@ -171,6 +171,9 @@ lazy = true
 [[params.plugins.js]]
 link = "plugins/youtube-lite.js"
 lazy = true
+[[params.plugins.js]]
+link = "plugins/lazy-loader.js"
+lazy = true
 
 ############################# Privacy and GDPR Settings ##############################
 # See https://gohugo.io/about/privacy/
