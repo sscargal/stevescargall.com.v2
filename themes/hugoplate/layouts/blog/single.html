@@ -65,6 +65,10 @@
               {{ partial "social-share" (dict "Context" . "Class" "share-icons" "Title" (i18n "share") "Whatsapp" false "Telegram" false "Linkedin" false "Pinterest" false "Tumblr" false "Vk" false) }}
             </div>
           </div>
+          
+          <!-- Google Adsense -->
+          {{ partial "components/google-adsense-article" . }}
+
           <!-- comments -->
           {{ if site.Config.Services.Disqus.Shortname }}
             <div class="mt-20">

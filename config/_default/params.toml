@@ -93,7 +93,7 @@ button = "I Accept"
 
 ######################## sidebar widgets #########################
 [widgets]
-sidebar = ["categories", "tags"]
+sidebar = ["categories", "tags", "sidebar-google-adsense"]
 
 # google map
 [google_map]
