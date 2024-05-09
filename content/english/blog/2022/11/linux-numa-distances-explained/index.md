@@ -23,7 +23,7 @@ System firmware provides ACPI SLIT tables, described in section 5.2.17 of the [
 
 We can view this information with `numactl`. The following shows a dual-socket system with locally attached DDR memory.
 
-```
+```bash
 # numactl -H
 available: 2 nodes (0-1)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155
@@ -40,7 +40,7 @@ node   0   1
 
 We can also view the node distance tables directly through sysfs:
 
-```
+```bash
 # cat /sys/devices/system/node/node*/distance
 10 21
 21 10
@@ -48,7 +48,7 @@ We can also view the node distance tables directly through sysfs:
 
 If we look at [distance.c](https://github.com/numactl/numactl/blob/master/distance.c) for [numactl](https://github.com/numactl/numactl), we see it opens and reads the sysfs tables:
 
-```
+```bash
 static int read_distance_table(void)
 {
 	[... snip ...]
@@ -61,7 +61,7 @@ static int read_distance_table(void)
 
 Installing acpia-tools provides the `acpidump` utility that we can use to see detailed ACPI table information
 
-```
+```bash
 # dnf install -y acpica-tools
 # which acpidump
 /usr/bin/acpidump
@@ -153,7 +153,7 @@ The Kernel scheduler uses the distance information to execute application thread
 
 To determine if the values in the SLIT tables are accurate, I ran [Intel MLC](https://www.intel.com/content/www/us/en/download/736633/736634/intel-memory-latency-checker-intel-mlc.html), which performs idle latency tests.
 
-```
+```bash
 # ./mlc --latency_matrix
 Intel(R) Memory Latency Checker - v3.9a
 Command line parameters: --latency_matrix 
@@ -174,7 +174,7 @@ The Heterogeneous Memory Attribute Table (HMAT) table is newly defined in sectio
 
 Examining the HMAT tables follows the same process as viewing the raw SLIT tables, as shown above.
 
-```
+```bash
 # acpidump > acpidata.dat
 # acpixtract -sHMAT acpidata.dat
 
@@ -425,7 +425,7 @@ As of Linux Kernel 6.0, there is no sysfs interface to view the HMAT. This may b
 
 You can find HMAT information in the boot logs, such as `dmesg`, that show somewhat more accurate values.
 
-```
+```bash
 # dmesg | grep "acpi/hmat"
 [    8.544245] acpi/hmat: HMAT: Memory Flags:0001 Processor Domain:0 Memory Domain:0
 [    8.544248] acpi/hmat: HMAT: Memory Flags:0001 Processor Domain:1 Memory Domain:1

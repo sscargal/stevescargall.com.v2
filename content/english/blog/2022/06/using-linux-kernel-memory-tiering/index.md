@@ -27,7 +27,7 @@ Memory Storage Hierarchy
 
 For this article, I'll keep the focus to DRAM and Intel Optane Persistent Memory (PMem). The Kernel features we'll discuss are generic so they'll work with other memory devices too. In a typical system with DRAM and PMem, the CPUs and the DRAM will be put in one logical NUMA node, while the PMem will be put in another (faked) logical NUMA node. With commit [c221c0b0308f](https://github.com/torvalds/linux/commit/c221c0b0308fd01d9fb33a16f64d2fd95f8830a4) ("device-dax: "Hotplug" persistent memory for use like normal RAM"), available from mainline Kernel v5.1 onwards, PMem can be used as cost-effective volatile memory with or without the use of a swap device. In a previous blog post, I describe [How To Extend Volatile System Memory (RAM) using Persistent Memory on Linux](https://stevescargall.com/2019/07/09/how-to-extend-volatile-system-memory-ram-using-persistent-memory-on-linux/) that uses this "KMemDAX" or "System-RAM" feature. The following examples shows four NUMA nodes, 2 x 192GB DRAM with CPUs and 2 x 32GB memory only (fake) NUMA nodes created from PMem devices (KMemDAX/System-RAM).
 
-```
+```bash
 # numactl -H
 available: 4 nodes (0-3)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
@@ -94,20 +94,20 @@ For this walk through, I'm using Fedora Server 36 with Kernel 5.18.0
 
 Create an Interleaved App Direct goal and reboot for the changes to take effect
 
-```
+```bash
 sudo ipmctl create -goal PersistentMemoryType=AppDirect
 sudo systemctl reboot
 ```
 
 ### Step 2 - Create devdax namespaces
 
-```
+```bash
 sudo ndctl create-namespace -f --mode devdax --continue
 ```
 
 Example:
 
-```
+```bash
 # sudo ndctl create-namespace -f --mode devdax --continue
 {
   "dev":"namespace3.0",
@@ -160,13 +160,13 @@ created 2 namespaces
 
 We need to convert the devdax namespaces to 'system-ram' devices so the Kernel can manage them. Read the 'daxctl-reconfigure-device' for more information and theory of operation.
 
-```
+```bash
 sudo daxctl reconfigure-device --mode=system-ram all
 ```
 
 If your Kernel supports and defaults to automatically online hotplug memory, you'll see a message similar to the following:
 
-```
+```bash
 # daxctl reconfigure-device --mode=system-ram all
 dax2.0: error: kernel policy will auto-online memory, aborting
 dax3.0: error: kernel policy will auto-online memory, aborting
@@ -177,7 +177,7 @@ reconfigured 0 devices
 
 Check your Kernel config to validate if it auto onlines hot plugged memory:
 
-```
+```bash
 # grep ONLINE /boot/config-$(uname -r)
 CONFIG_MEMORY_HOTPLUG_DEFAULT_ONLINE=y
 
@@ -187,8 +187,7 @@ online
 
 Temporarily disable the hotplug memory feature:
 
-```
-
+```bash
 # sudo echo offline > /sys/devices/system/memory/auto_online_blocks
 # cat /sys/devices/system/memory/auto_online_blocks
 offline
@@ -198,7 +197,7 @@ Based on the distribution, there may be udev rules that interfere with memory on
 
 Re-Run the daxctl command and it should now succeed. Example:
 
-```
+```bash
 # sudo daxctl reconfigure-device --mode=system-ram all
 [...]
 reconfigured 2 devices
@@ -231,7 +230,7 @@ reconfigured 2 devices
 
 Commands such as `lsmem` should show the DRAM and System-RAM devices
 
-```
+```bash
 # lsmem
 RANGE                                  SIZE  STATE REMOVABLE    BLOCK
 0x0000000000000000-0x000000007fffffff    2G online       yes        0
@@ -250,13 +249,13 @@ Total offline memory:      0B
 
 \[Optional\] Disable the disk swap device:
 
-```
+```bash
 sudo swapoff -a
 ```
 
 Enable the demotion feature
 
-```
+```bash
 # sudo echo 1 > /sys/kernel/mm/numa/demotion_enabled
 # cat /sys/kernel/mm/numa/demotion_enabled
 true
@@ -291,7 +290,7 @@ Or NUMA\_BALANCING\_MEMORY\_TIERING to optimize page placement among different t
 
 My system now has four NUMA nodes, two with DRAM (0 & 1), two with PMem/System-RAM (2 & 3):
 
-```
+```bash
 # numactl -H
 available: 4 nodes (0-3)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
@@ -316,7 +315,7 @@ node   0   1   2   3
 
 For Kernels with the promote feature, set the following:
 
-```
+```bash
 echo 30 > /proc/sys/kernel/numa_balancing_rate_limit_mbps
 # optional but recommended
 echo 1 > /proc/sys/kernel/numa_balancing_wake_up_kswapd_early
@@ -328,20 +327,20 @@ echo 16 > /proc/sys/kernel/numa_balancing_demoted_threshold
 
 Like all good custodians of our systems, we want to know when pages are being promoted and demoted. The number of promoted pages can be checked by the following counters in /proc/vmstat or /sys/devices/system/node/node\[n\]/vmstat:
 
-```
+```bash
 pgpromote_success
 ```
 
 The number of pages demoted can be checked by the following counters:
 
-```
+```bash
 pgdemote_kswapd
 pgdemote_direct
 ```
 
 The page number of failure in promotion could be checked by the following counters:
 
-```
+```bash
 pgmigrate_fail_dst_node_fail
 pgmigrate_fail_numa_isolate_fail
 pgmigrate_fail_nomem_fail
@@ -350,7 +349,7 @@ pgmigrate_fail_refcount_fail
 
 #### Example
 
-```
+```bash
 # grep -E "pgdemote|pgpromote|pgmigrate" /proc/vmstat
 pgpromote_success 0
 pgdemote_kswapd 0

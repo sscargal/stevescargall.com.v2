@@ -58,7 +58,7 @@ On NUMA ([Non-Uniform Memory Access](https://en.wikipedia.org/wiki/Non-uniform_m
 
 The `numactl` and `ndctl` utilities can be used to show NUMA locality information. The following `numactl --hardware` shows two CPU sockets, each CPU has 24 cores, 48 threads, and 196GB of DDR:
 
-```
+```bash
 # numactl --hardware
 available: 2 nodes (0-1)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
@@ -75,7 +75,7 @@ node   0   1
 
 The following shows the `numa_node` to which the persistent memory capacity (available\_size) belongs:
 
-```
+```bash
 # ndctl list -Rv
 [
   {
@@ -131,13 +131,13 @@ LVM DAX Support Matrix
 
 This step is vendor specific.  For Intel Optane Persistent Memory, regions can be created using the `ipmctl` utility. [IPMCTL](https://github.com/intel/ipmctl) is available as an open source project and it is available for both Linux and Windows. The following `ipmctl` command interleaves all persistent memory modules within the same socket. On a two socket system, this will result in two regions, one per socket.
 
-```
+```bash
 # sudo ipmctl create -goal PersistentMemoryType=AppDirect 
 ```
 
 output:
 
-```
+```bash
 The following configuration will be applied: 
 SocketID | DimmID | MemorySize | AppDirect1Size | AppDirect2Size 
 ================================================================== 
@@ -174,7 +174,7 @@ A reboot is required to process new memory allocation goals.
 
 After the system reboots, you can check the current region configuration using `ipmctl show –region`.
 
-```
+```bash
 # ipmctl show -region 
  SocketID | ISetID             | PersistentMemoryType | Capacity   | FreeCapacity | HealthState 
 ================================================================================================ 
@@ -194,13 +194,13 @@ You can read more in the "[Managing Namespaces](https://docs.pmem.io/ndctl-users
 
 Here we use region0 to create an fsdax namespace: 
 
-```
+```bash
 $ sudo ndctl create-namespace --region=region0 --mode=fsdax
 ```
 
 output:
 
-```
+```bash
 { 
   "dev":"namespace0.0", 
   "mode":"fsdax", 
@@ -215,13 +215,13 @@ output:
 
 Now we can create another namespace on the other region:
 
-```
+```bash
 $ sudo ndctl create-namespace --region=region1 --mode=fsdax 
 ```
 
 output:
 
-```
+```bash
 { 
   "dev":"namespace1.0", 
   "mode":"fsdax", 
@@ -245,13 +245,13 @@ $ sudo ndctl create-namespace --region=region1 --mode=sector
 
 Scan the system for block devices that LVM can see and manage. The output will display all available block devices that LVM can interact with.  You can do this using the `lvmdiskscan` command: 
 
-```
+```bash
 $ sudo lvmdiskscan  
 ```
 
 output:
 
-```
+```bash
   /dev/pmem0                [       1.45 TiB] 
   /dev/pmem1                [       1.45 TiB] 
   […] 
@@ -265,26 +265,26 @@ output:
 
 We want to use `/dev/pmem0` and `/dev/pmem1` to create our physical volumes using the `pvcreate` command:
 
-```
+```bash
 $ sudo pvcreate /dev/pmem0 /dev/pmem1 
 ```
 
    output:
 
-```
+```bash
   Physical volume "/dev/pmem0" successfully created. 
   Physical volume "/dev/pmem1" successfully created. 
 ```
 
 This will write an LVM metadata to the devices to indicate that they are ready to be added to a volume group.  You can verify that LVM has registered the physical volumes using the `pvs` command: 
 
-```
+```bash
 $ sudo pvs 
 ```
 
 output:
 
-```
+```bash
   PV         VG              Fmt  Attr PSize   PFree 
   /dev/pmem0                 lvm2 --- 1.45t  1.45t 
   /dev/pmem1                 lvm2 --- 1.45t  1.45t 
@@ -296,25 +296,25 @@ We can create a volume group using the two physical volumes we just created usin
 
 To create the volume group using both of our pmem physical volumes, we use: 
 
-```
+```bash
 $ sudo vgcreate PmemVol /dev/pmem0 /dev/pmem1 
 ```
 
 output:
 
-```
+```bash
   Volume group "PmemVol" successfully created 
 ```
 
 Rerunning `pvs` allows us to verify our physical volumes are now associated with the new volume group: 
 
-```
+```bash
 $ sudo pvs 
 ```
 
 output:
 
-```
+```bash
   PV         VG              Fmt  Attr PSize   PFree 
   /dev/pmem0 PmemVol         lvm2 a-- 1.45t  1.45t 
   /dev/pmem1 PmemVol         lvm2 a-- 1.45t  1.45t 
@@ -322,13 +322,13 @@ output:
 
 To display the volume group configuration, we use the `vgs` command: 
 
-```
+```bash
 $ sudo vgs 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree 
   PmemVol           2   0   0 wz--n- <2.91t <2.91t 
 ```
@@ -359,52 +359,52 @@ The `lvcreate` command is used to create logical volumes.  For concatenated/l
 
 We can create the first two logical volumes as follows: 
 
-```
+```bash
 $ sudo lvcreate -L 20G -n db PmemVol 
 $ sudo lvcreate -L 20G -n www PmemVol 
 ```
 
 output:
 
-```
+```bash
   Logical volume "db" created. 
   Logical volume "www" created. 
 ```
 
 The remaining space within the volume group can be assigned to the "app" volume using the `-l` flag, which works in extents.  The `–l` flag accepts a percentage and a unit to communicate our intentions better.  To allocate the remaining free space, we can use `-l 100%FREE`: 
 
-```
+```bash
 $ sudo lvcreate -l 100%FREE -n app PmemVol 
 ```
 
 output:
 
-```
+```bash
   Logical volume "app" created. 
 ```
 
 Rerunning the `vgs` command shows we now have two physical (#PV) and three logical volumes (#LV):
 
-```
+```bash
 $ sudo vgs 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree 
   PmemVol           2   3   0 wz--n- <2.91t     0 
 ```
 
 To show the individual volumes within the group, we use `-o +lv_size,lv_name`: 
 
-```
+```bash
 $ sudo vgs -o +lv_size,lv_name 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree  LSize   LV 
   PmemVol           2   3   0 wz--n- <2.91t     0   20.00g db 
   PmemVol           2   3   0 wz--n- <2.91t     0   20.00g www 
@@ -421,52 +421,52 @@ If the underlying physical devices that make up a striped logical volume are dif
 
 Here, we create our two 20GB striped logical volumes across both physical volumes (`-i2`) with a stripe width of 4K (`-I4k`) (the default page size).
 
-```
+```bash
 $ sudo lvcreate -L 20G -i 2 -I 4k -n db PmemVol
 $ sudo lvcreate -L 20G -i 2 -I 4k -n www PmemVol
 ```
 
 output:
 
-```
+```bash
   Logical volume "db" created. 
   Logical volume "www" created. 
 ```
 
 The remaining space within the volume group can be assigned to the "app" volume using the `-l` flag, which works in extents.  The `–l` flag accepts a percentage and a unit to communicate our intentions better.  To allocate the remaining free space, we can use `-l 100%FREE`: 
 
-```
+```bash
 $ sudo lvcreate -l 100%FREE -i 2 -I 4k -n app PmemVol 
 ```
 
 output:
 
-```
+```bash
   Logical volume "app" created. 
 ```
 
 Rerunning the `vgs` command shows we now have two physical and three logical volumes:
 
-```
+```bash
 $ sudo vgs 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree 
   PmemVol           2   3   0 wz--n- <2.91t     0 
 ```
 
 To show the individual volumes within the group and stripe width, we use `-o +lv_size,lv_name,stripes`: 
 
-```
+```bash
 $ sudo vgs -o +lv_size,lv_name,stripes
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree LSize   LV   #Str
   PmemVol           2   3   0 wz--n- <2.91t    0   20.00g db      2
   PmemVol           2   3   0 wz--n- <2.91t    0   20.00g www     2
@@ -475,13 +475,13 @@ output:
 
 If you'd like to see even more detail, including internal LVs which are used to construct the top-level LV and their exact layouts, you can use:
 
-```
+```bash
 $ sudo lvs -a -o+lv_layout,lv_role,stripes,devices
 ```
 
 output:
 
-```
+```bash
   LV   VG              Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert Layout     Role       #Str Devices  
   app  PmemVol         -wi-a----- <2.87t                                                     striped    public        2 /dev/pmem0(5120),/dev/pmem1(5120)
   db   PmemVol         -wi-a----- 20.00g                                                     striped    public        2 /dev/pmem0(0),/dev/pmem1(0)
@@ -502,52 +502,52 @@ An LVM mirror divides the device being copied into regions that, by default, are
 
 We can create the first two logical volumes like this: 
 
-```
+```bash
 $ sudo lvcreate -L 20G -m 1 -n db PmemVol 
 $ sudo lvcreate -L 20G -m 1 -n www PmemVol 
 ```
 
 output:
 
-```
+```bash
   Logical volume "db" created. 
   Logical volume "www" created. 
 ```
 
 The remaining space within the volume group can be assigned to the "app" volume using the `-l` flag, which works in extents.  The `–l` flag accepts a percentage and a unit to communicate our intentions better.  To allocate the remaining free space, we can use `-l 100%FREE`: 
 
-```
+```bash
 $ sudo lvcreate -l 100%FREE -m 1 -n app PmemVol 
 ```
 
 output:
 
-```
+```bash
   Logical volume "app" created. 
 ```
 
 Rerunning the `vgs` command shows we now have two physical and three logical volumes:
 
-```
+```bash
 $ sudo vgs 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree 
   PmemVol           2   3   0 wz--n- <2.91t     0 
 ```
 
 To show the individual volumes within the group, we use `-o +lv_size,lv_name`: 
 
-```
+```bash
 $ sudo vgs -o +lv_size,lv_name 
 ```
 
 output:
 
-```
+```bash
   VG              #PV #LV #SN Attr   VSize   VFree  LSize   LV 
   PmemVol           2   3   0 wz--n- <2.91t     0   20.00g db 
   PmemVol           2   3   0 wz--n- <2.91t     0   20.00g www 
@@ -556,13 +556,13 @@ output:
 
 To show more detail, including whether the mirrors are in sync or syncing, we use `-o _lv_layout,stripes`:
 
-```
+```bash
 # lvs -o+lv_layout,stripes
 ```
 
 output:
 
-```
+```bash
   LV   VG              Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert Layout     #Str
   app  PmemVol         rwi-a-r--- 1.41t                                    2.24             raid,raid1    2
   db   PmemVol         rwi-a-r--- 20.00g                                    100.00           raid,raid1    2
@@ -571,13 +571,13 @@ output:
 
 Another way to show more detail is using `lvs --all --segments -o +devices`:
 
-```
+```bash
 $ lvs --all --segments -o +devices
 ```
 
 output:
 
-```
+```bash
   LV             VG              Attr       #Str Type   SSize   Devices
   app            PmemVol         rwi-a-r--- 2 raid1    1.41t app_rimage_0(0),app_rimage_1(0)
   [app_rimage_0] PmemVol         iwi-aor--- 1 linear   1.41t /dev/pmem0(10243)
@@ -608,13 +608,13 @@ The logical volumes can now be used as regular block devices.   Logical volu
 
 We can see our new volumes here: 
 
-```
+```bash
 $ ls -l /dev/PmemVol/* 
 ```
 
 output:
 
-```
+```bash
 lrwxrwxrwx. 1 root root 7 Apr  4 12:33 /dev/PmemVol/app -> ../dm-4 
 lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/PmemVol/db -> ../dm-2 
 lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/PmemVol/www -> ../dm-3 
@@ -622,13 +622,13 @@ lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/PmemVol/www -> ../dm-3
 
 and
 
-```
+```bash
 $ ls -l /dev/mapper/PmemVol-* 
 ```
 
 output:
 
-```
+```bash
 lrwxrwxrwx. 1 root root 7 Apr  4 12:33 /dev/mapper/PmemVol-app -> ../dm-4 
 lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/mapper/PmemVol-db -> ../dm-2 
 lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/mapper/PmemVol-www -> ../dm-3 
@@ -636,26 +636,26 @@ lrwxrwxrwx. 1 root root 7 Apr  4 12:28 /dev/mapper/PmemVol-www -> ../dm-3
 
 Additionally, the UDEV driver creates links in `/dev/disk/by-id` using the UUID of the pmem namespace: 
 
-```
+```bash
 $ ls -l /dev/disk/by-id/pmem* 
 ```
 
 output:
 
-```
+```bash
 lrwxrwxrwx. 1 root root 11 Apr  4 12:33 /dev/disk/by-id/pmem-2f373b37-d9b3-48e3-a2e4-472462d884ce -> ../../pmem0 
 lrwxrwxrwx. 1 root root 11 Apr  4 12:33 /dev/disk/by-id/pmem-e0c7c12e-5006-4116-a8ce-e59b25bc0293 -> ../../pmem1 
 ```
 
 The UUIDs match those shown by `ndctl` when we list the namespaces:
 
-```
+```bash
 $ ndctl list -N | jq ' .. | (.blockdev,.dev,.uuid)?' 
 ```
 
 output:
 
-```
+```bash
 "pmem1" 
 "namespace1.0" 
 "e0c7c12e-5006-4116-a8ce-e59b25bc0293" 
@@ -666,7 +666,7 @@ output:
 
 To format our logical volumes with an ext4 file system, we use: 
 
-```
+```bash
 $ sudo mkfs.ext4 -b 4096 -E stride=512 -F /dev/PmemVol/db 
 $ sudo mkfs.ext4 -b 4096 -E stride=512 -F /dev/PmemVol/www 
 $ sudo mkfs.ext4 -b 4096 -E stride=512 -F /dev/PmemVol/app 
@@ -674,7 +674,7 @@ $ sudo mkfs.ext4 -b 4096 -E stride=512 -F /dev/PmemVol/app
 
 To format our logical volumes with an XFS file system, we use: 
 
-```
+```bash
 $ sudo mkfs.xfs -f -d su=2m,sw=1 -m reflink=0 /dev/PmemVol/db 
 $ sudo mkfs.xfs -f -d su=2m,sw=1 -m reflink=0 /dev/PmemVol/www 
 $ sudo mkfs.xfs -f -d su=2m,sw=1 -m reflink=0 /dev/PmemVol/app 
@@ -684,13 +684,13 @@ $ sudo mkfs.xfs -f -d su=2m,sw=1 -m reflink=0 /dev/PmemVol/app
 
 With the file systems created, we can now create the mount points:
 
-```
+```bash
 $ sudo mkdir -p /mnt/{db,www,app} 
 ```
 
 We can then mount the logical volumes to the appropriate location. For fsdax namespaces, use:
 
-```
+```bash
 $ sudo mount -o dax /dev/PmemVol/db /mnt/db  
 $ sudo mount –o dax /dev/PmemVol/www /mnt/www 
 $ sudo mount –o dax /dev/PmemVol/app /mnt/app 
@@ -698,7 +698,7 @@ $ sudo mount –o dax /dev/PmemVol/app /mnt/app
 
 For sector namespaces, use:
 
-```
+```bash
 $ sudo mount /dev/PmemVol/db /mnt/db  
 $ sudo mount /dev/PmemVol/www /mnt/www 
 $ sudo mount /dev/PmemVol/app /mnt/app
@@ -706,7 +706,7 @@ $ sudo mount /dev/PmemVol/app /mnt/app
 
 For XFS file systems, one additional step is required to ensure we maintain 2MiB alignment:
 
-```
+```bash
 $ sudo xfs_io -c "extsize 2m" /mnt/db
 $ sudo xfs_io -c "extsize 2m" /mnt/www
 $ sudo xfs_io -c "extsize 2m" /mnt/app
@@ -714,13 +714,13 @@ $ sudo xfs_io -c "extsize 2m" /mnt/app
 
 Finally, you can verify the file systems mounted successfully:
 
-```
+```bash
 $ mount -v | grep PmemVol 
 ```
 
  output:
 
-```
+```bash
 /dev/mapper/PmemVol-db on /mnt/db type ext4 (rw,relatime,seclabel,dax) 
 /dev/mapper/PmemVol-www on /mnt/www type ext4 (rw,relatime,seclabel,dax) 
 /dev/mapper/PmemVol-app on /mnt/app type ext4 (rw,relatime,seclabel,dax) 

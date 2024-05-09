@@ -13,7 +13,7 @@ When working with CXL Type 3 Memory Expander endpoints, it's nice to know which 
 
 CXL memory expanders appear in Linux as memory-only or cpu-less NUMA Nodes. For example, NUMA nodes 2 & 3 do not have any CPUs assigned to them.
 
-```
+```bash
 # numactl -H
 available: 4 nodes (0-3)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155
@@ -40,7 +40,7 @@ In a [previous post](https://stevescargall.com/2019/07/09/how-to-extend-volatile
 
 In this host, we have two physical CXL memory expansion devices (I intentionally removed the vendor information and replaced it with 'x')
 
-```
+```bash
 # lspci | grep CXL 
 38:00.0 CXL: xxxxxxxxxx Device c000 (rev 01)
 b8:00.0 CXL: xxxxxxxxxx Device c000 (rev 01)
@@ -50,7 +50,7 @@ b8:00.0 CXL: xxxxxxxxxx Device c000 (rev 01)
 
 If we examine each device through the sysfs interface, we can obtain the list of CPUs and primary NUMA Node, ie:
 
-```
+```bash
 # cd /sys/devices/pci0000:38/0000:38:00.0
 # cat numa_node 
 0
@@ -68,7 +68,7 @@ If we examine each device through the sysfs interface, we can obtain the list of
 
 If the CXL device is managed by the `cxl_mem` driver, we can get the primary NUMA Node from that entry, but not the list of CPUs, eg:
 
-```
+```bash
 # cat /sys/bus/cxl/devices/mem0/numa_node
 0
 # cat /sys/bus/cxl/devices/mem1/numa_node 
@@ -79,7 +79,7 @@ If the CXL device is managed by the `cxl_mem` driver, we can get the primary NUM
 
 Using the `lspci` utility to obtain the 'NUMA' information, eg:
 
-```
+```bash
 # lspci -s 38:00.0 -vvv | grep -i numa
 	NUMA node: 0
 # lspci -s b8:00.0 -vvv | grep -i numa

@@ -182,6 +182,14 @@ Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod 
 
 This is an `Inline code` sample.
 
+```
+$ echo "Hello World"
+```
+
+```bash
+$ echo "I am a bash script"
+```
+
 ```javascript
 var s = "JavaScript syntax highlighting";
 alert(s);

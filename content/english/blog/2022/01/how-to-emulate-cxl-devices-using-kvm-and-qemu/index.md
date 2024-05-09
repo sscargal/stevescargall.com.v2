@@ -47,7 +47,7 @@ In the future, when all the CXL features are available, you'll only need to inst
 
 Install the prerequisites for building qemu and ndctl:
 
-```
+```bash
 $ sudo dnf install @development-tools
 $ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel keyutils-libs-devel iniparser iniparser-devel bash-completion ninja-build sparse pixman pixman-devel
 $ sudo dnf install virt-install libvirt libvirt-daemon-kvm qemu-img cloud-init genisoimage
@@ -61,7 +61,7 @@ Both Intel and AMD CPU support virtualization technology which allows multiple o
 
 In Linux, we can look at `cpuinfo` to determine if virtualization is enabled in the BIOS using:
 
-```
+```bash
 # lscpu | grep Virtualization
 Virtualization:                  VT-x
 ```
@@ -75,14 +75,14 @@ At the time of writing, the latest release of QEMU (6.2.0) does not have CXL sup
 
 Create a working directory to download QEMU:
 
-```
+```bash
 $ mkdir ~/downloads
 $ cd ~/downloads
 ```
 
 Clone Ben's QEMU branch and confirm the default branch is the one we want (cxl-2.0v4):
 
-```
+```bash
 $ git clone https://gitlab.com/bwidawsk/qemu
 $ cd qemu
 $ git branch 
@@ -91,7 +91,7 @@ $ git branch
 
 Build QEMU:
 
-```
+```bash
 mkdir build
 cd build
 ../configure --prefix=/opt/qemu-cxl
@@ -107,7 +107,7 @@ Note 2 - Since this is a development branch of QEMU, I want to install it under 
 
 Confirm IP forwarding is enabled for IPv4 and/or IPv6 on the host (0=Disabled, 1=Enabled):
 
-```
+```bash
 $ sudo cat /proc/sys/net/ipv4/ip_forward
 1
 $ sudo cat /proc/sys/net/ipv6/conf/default/forwarding
@@ -116,14 +116,14 @@ $ sudo cat /proc/sys/net/ipv6/conf/default/forwarding
 
 If necessary, activate forwarding temporarily until the next reboot:
 
-```
+```bash
 $ sudo echo 1 > /proc/sys/net/ipv4/ip_forward
 $ sudo echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
 ```
 
 For a permanent setup create the following file:
 
-```
+```bash
 $ sudo vim /etc/sysctl.d/50-enable-forwarding.conf
 # local customizations
 #
@@ -143,7 +143,7 @@ We'll use the Cloud Image for this article.
 
 The location of the downloaded images can be any location you choose. By default, the libvirt default location for images to install from is `/var/lib/libvirt/boot`. If this doesn't exist, verify you installed the prerequisite libvirt\* packages shown earlier.
 
-```
+```bash
 // Confirm the OS base directory exists
 $  ls -ld /var/lib/libvirt/boot
 drwx--x--x. 2 root root 4096 Dec 16 11:01 /var/lib/libvirt/boot
@@ -164,7 +164,7 @@ sha256sum: WARNING: 19 lines are improperly formatted
 
 Create a new disk image from the cloud image for our new guest VM called "CXL-Test":
 
-```
+```bash
 $ sudo cp  /var/lib/libvirt/boot/Fedora-Cloud-Base-35-1.2.x86_64.qcow2 /var/lib/libvirt/images/CXL-Test.qcow2
 
 // Grow the disk image by 15GiB
@@ -186,7 +186,7 @@ Format specific information:
 
 An alternative approach is to use the downloaded cloud image as a backing file and create a new image from it:
 
-```
+```bash
 qemu-img create -f qcow2 \
 -b /var/lib/libvirt/boot/Fedora-Cloud-Base-35-1.2.x86_64.qcow2 \
 -f qcow2 \
@@ -208,7 +208,7 @@ I'll cover both approaches here. You should spend time correctly configuring you
 
 The virsh command used to manage virsh guest domains. At the time of writing, it doesn't natively support nvdimm (PMem) or CXL devices. One solution is to manually edit the XML to add the devices, which is outside the scope of this article. Instead, we can use virst-install to initially provision and configure the guest OS, then use qemu-system-x86\_64 to launch the guest with the required PMem and CXL devices.
 
-```
+```bash
 $ sudo virt-install --connect qemu:///system \
 --name CXL-Test \
 --memory 4096 \
@@ -235,7 +235,7 @@ Here is a description of the options we used:
 
 Once the guest OS boots, you should be presented with the "fedora login:" prompt. Use the username of "root" and the one-time password shown when we launched the installation process. You'll be required to change the password:
 
-```
+```bash
 fedora login: root
 Password:
 You are required to change your password immediately (administrator enforced).
@@ -255,7 +255,7 @@ Cloud-init uses two configuration files, `user-data` and `meta-data`. The met
 
 Create the meta-data file, specifying the instance and hostname:
 
-```
+```bash
 $ cat > /var/lib/libvirt/boot/meta-data << EOF
 instance-id: cxl-test
 local-hostname: cxl-test
@@ -264,7 +264,7 @@ EOF
 
 Next, we’re going to create the user-data file and ask ccloud-init to create a new user called 'cxldemo' using an SSH public key (no local login via the console):
 
-```
+```bash
 $ cat > /var/lib/libvirt/boot/user-data << EOF
 #cloud-config
 
@@ -291,13 +291,13 @@ EOF
 
 The 'ssh-authorized-keys' should exists in `.ssh/id_rsa/id_rsa.pub`. If you do not have a private and public key created, generate one using:
 
-```
+```bash
 $ ssh-keygen -b 4096
 ```
 
 If you do not want to allow or configure ssh into the guest VM, you can create local logins by replacing the above user-data file with this one:
 
-```
+```bash
 $ cat > /var/lib/libvirt/boot/user-data << EOF
 #cloud-config
 
@@ -329,7 +329,7 @@ EOF
 
 Create an ISO image of the user-data and meta-data files that we'll use for the first boot.
 
-```
+```bash
 $ sudo genisoimage -output /var/lib/libvirt/boot/Fedora-Cloud-CXL-test-cloud-init.iso \
 -volid cidata -joliet -rock \
 /var/lib/libvirt/boot/user-data \
@@ -338,7 +338,7 @@ $ sudo genisoimage -output /var/lib/libvirt/boot/Fedora-Cloud-CXL-test-cloud-ini
 
 Start the guest. The following options use the Cloud disk image, the Cloud-Init ISO, assign 4GB of RAM, 4 vCPUs, and configure the host to boot on the console (STDOUT). This is sufficient to boot the host and perform the initial configuration. You should configure the guest with options appropriate to your environment.
 
-```
+```bash
 $ sudo /opt/qemu-cxl/bin/qemu-system-x86_64 -drive file=/var/lib/libvirt/images/CXL-Test.qcow2,format=qcow2,index=0,media=disk,id=hd \
 -cdrom /var/lib/libvirt/boot/Fedora-Cloud-CXL-test-cloud-init.iso \
 -m 4G,slots=8,maxmem=8G \
@@ -354,7 +354,7 @@ To exit the console press Ctrl-A, then type 'x' to exit, or run `sudo poweroff` 
 
 To login via ssh use the following from the host:
 
-```
+```bash
 $ ssh cxldemo@localhost -p 2222
 ```
 
@@ -368,13 +368,13 @@ The 5.16 Mainline Kernel doesn't have full CXL support. You can build a custom 5
 
 Download the definitions for the Kernel vanilla repositories:
 
-```
+```bash
 $ curl -s https://repos.fedorapeople.org/repos/thl/kernel-vanilla.repo | sudo tee /etc/yum.repos.d/kernel-vanilla.repo
 ```
 
 Run this to install the latest stable mainline kernel:
 
-```
+```bash
 $ sudo dnf --enablerepo=kernel-vanilla-stable update
 $ sudo systemctl reboot
 ```
@@ -383,7 +383,7 @@ $ sudo systemctl reboot
 
 The following configured two CXL devices in the guest.
 
-```
+```bash
 $ sudo /opt/qemu-cxl/bin/qemu-system-x86_64 -drive file=/var/lib/libvirt/images/CXL-Test.qcow2,format=qcow2,index=0,media=disk,id=hd \
 -m 4G,slots=8,maxmem=8G \
 -smp 4 \
@@ -407,7 +407,7 @@ $ sudo /opt/qemu-cxl/bin/qemu-system-x86_64 -drive file=/var/lib/libvirt/images/
 
 Once the host boots, you can verify there are two 'mem' devices under /dev/cxl:
 
-```
+```bash
 $ ls -1 /dev/cxl
 mem0
 mem1

@@ -17,7 +17,7 @@ author: Steve Scargall
 
 Executing `ipmctl show-dimm` to get device information shows the persistent memory modules in a 'Non-functional' health state, eg:
 
-```
+```bash
 # ipmctl show -dimm
 
  DimmID | Capacity | HealthState    | ActionRequired | LockState | FWVersion
@@ -38,7 +38,7 @@ Executing `ipmctl show-dimm` to get device information shows the persistent memo
 
 Other `ipmctl` commands may fail and return "No functional DIMMs in the system.", eg:
 
-```
+```bash
 # ipmctl show -sensor health
 
 No functional DIMMs in the system.
@@ -62,7 +62,7 @@ The ipmctl-show-device(1) man page has the following description for 'Non-functi
 
 **_Note:_** Linux does not support the SMBus interface. It only supports the DDRT protocol (default). Attempts to use the `-smbus` option will fail with the following error:
 
-```
+```bash
 # ipmctl show -smbus -dimm
 
 The following protocol -smbus is unsupported on this OS. Please use -ddrt instead.
@@ -102,7 +102,7 @@ Intel BMC showing DIMM Information (DDR & DCPMM Persistent Memory)
 
 If you have the `ndctl` utility installed, use it to determine whether the NFIT bus is available. If so, you should see output similar to the following:
 
-```
+```bash
 # ndctl list --buses
 [
   {
@@ -121,7 +121,7 @@ There are several drives that will be loaded by the Kernel depending on the oper
 
 The following shows the loaded drivers for a Linux operating system when persistent memory is in AppDirect mode:
 
-```
+```bash
 # lsmod | egrep -i "nv|pmem"
 dax_pmem               16384  0
 dax_pmem_core          16384  1 dax_pmem
@@ -134,7 +134,7 @@ libnvdimm             192512  5 dax_pmem,dax_pmem_core,nd_btt,nd_pmem,nfit
 
 Here's what to expect for a system in Memory Mode:
 
-```
+```bash
 # lsmod | egrep -i "nv|pmem"
 nvme                   49152  0
 nvme_core             110592  1 nvme
@@ -149,7 +149,7 @@ For all Linux distros that support persistent memory, the drivers should be avai
 
 Most Linux distros keep their drivers in `/lib/modules/$(uname -r)/kernel/drivers`. On Fedora, for example, the drivers are installed by default:
 
-```
+```bash
 # ls /lib/modules/$(uname -r)/kernel/drivers/acpi/nfit
 nfit.ko.xz
 
@@ -189,7 +189,7 @@ If the acpi, nfit, nvdimm, dax, and pmem directories are missing, the drivers ar
 
 The drivers are delivered as part of the Kernel package. On Fedora31, for example, we see the nfit driver is delivered by the kernel itself:
 
-```
+```bash
 # dnf provides /lib/modules/$(uname -r)/kernel/drivers/acpi/nfit/nfit.ko.xz
 Last metadata expiration check: 1:20:08 ago on Fri 29 May 2020 03:21:17 PM MDT.
 kernel-core-5.6.13-200.fc31.x86_64 : The Linux kernel
@@ -236,7 +236,7 @@ Options in make menuconfig:
     
     - Device memory (pmem, HMM, etc…) hotplug support <needed for huge pages>
 
-```
+```bash
 CONFIG_ZONE_DEVICE=y
 CONFIG_MEMORY_HOTPLUG=y
 CONFIG_MEMORY_HOTREMOVE=y
@@ -258,7 +258,7 @@ CONFIG_DEV_DAX_KMEM=m
 
 You can check what options were used to configure the Kernel using the config file that usually resides in the /boot file system. There are many more kernel options available than listed in the Wiki. For example, on Kernel 5.6.13, we have:
 
-```
+```bash
 # egrep -i 'zone|memory|hugepage|nfit|pmem|nvdimm|btt|dax' /boot/config-$(uname -r)
 CONFIG_CROSS_MEMORY_ATTACH=y
 CONFIG_ZONE_DMA32=y

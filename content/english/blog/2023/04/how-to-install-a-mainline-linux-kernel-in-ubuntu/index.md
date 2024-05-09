@@ -1,44 +1,31 @@
 ---
-title: How To Install a Mainline Linux Kernel in Ubuntu
-date: 2023-04-21T00:20:10Z
-draft: false
-author: Steve Scargall
-tags:
-  - ubuntu
-  - linux
-  - kernel
-  - mainline
-categories:
-  - linux
-  - how to
-image: "images/_6bd5d195-ab4b-44d7-b628-49ce6aa7ca59-min.jpeg"
-author: Steve Scargall
+title: "How To Install a Mainline Linux Kernel in Ubuntu"
 ---
 
 By default, Ubuntu systems run with the Ubuntu kernels provided by the Ubuntu repositories. To get unmodified upstream kernels that have new features or to confirm that upstream has fixed a specific issue, we often need to install the mainline Kernel. The mainline kernel is the most recent version of the Linux kernel released by the Linux Kernel Organization. It undergoes several stages of development, including merge windows, release candidates, and final releases. Mainline kernels are designed to offer the latest features and improvements, making them attractive to developers and power users. [Kernel.org](https://www.kernel.org/) lists the available Kernel versions. 
 
 To install the mainline kernel, we need a package called [mainline](https://github.com/bkw777/mainline?ref=learnubuntu.com) available from the cappelikan personal package archive (PPA). To add PPA for the mainline package, use the following command:
 
-```
+```bash
 sudo add-apt-repository ppa:cappelikan/ppa
 ```
 
 Run the following commands to update the repository and install the mainline utility:
 
-```
+```bash
 sudo apt update
 sudo apt install mainline
 ```
 
 Once installed, we can check the available latest mainline and the point release using the following command:
 
-```
+```bash
 mainline --check
 ```
 
 For example, the latest stable kernel at the time of writing this article was 6.2.12.
 
-```
+```bash
 $ sudo mainline --check
 mainline 1.2.5
 Distribution: Ubuntu 22.04.2 LTS
@@ -55,7 +42,7 @@ Latest point update: 5.15.108
 
 If you want the very latest unstable mainline, add `--include-unstable` to the command, eg:
 
-```
+```bash
 # mainline --check --include-unstable
 mainline 1.2.5
 Distribution: Ubuntu 22.04.2 LTS
@@ -75,22 +62,22 @@ We see Kernel 6.3.0-rc7 is available.
 ### Installing the latest mainline kernel
 
 To install the latest stable kernel (6.2.12 in our example), all you have to do is run the following command:
-```
+```bash
 $ sudo mainline --install-latest
 ```
 
 To install the latest point Kernel (5.15.0-43.46), run the following command:
-```
+```bash
 $ sudo mainline --install-point
 ```
 
 To install the latest unstable Kernel (6.3.0-rc7), run the following command:
-```
+```bash
 $ sudo mainline --install 6.3.0-rc7
 ```
 
 For more information and options run `mainline --help`
-```
+```bash
 $ mainline --help
 mainline 1.2.5
 Distribution: Ubuntu 22.04.2 LTS
@@ -130,13 +117,13 @@ Notes:
 
 Once the Kernel is installed, reboot
 
-```
+```bash
 $ sudo systemctl reboot
 ```
 
 When the system boots, verify the new Kernel is loaded
 
-```
+```bash
 $ uname -r
 6.3.0-060300rc7-generic
 ```

@@ -28,7 +28,7 @@ The dm-writecache target will now check for CLFLUSHOPT support and use it when a
 
 [The patch](https://git.kernel.org/pub/scm/linux/kernel/git/device-mapper/linux-dm.git/commit/?h=dm-5.8&id=a70589009f56daa3a1f2267f376ba4963a25f2fe) is queued as part of the Device Mapper changes for Linux 5.8. Results indicate up to 1.6X performance improvement for 4K blocks:
 
-```
+```bash
 block size   512             1024            2048            4096
 movnti       496 MB/s        642 MB/s        725 MB/s        744 MB/s
 clflushopt   373 MB/s        688 MB/s        1.1 GB/s        1.2 GB/s

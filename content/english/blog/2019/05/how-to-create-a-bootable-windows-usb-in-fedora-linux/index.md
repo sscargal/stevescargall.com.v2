@@ -50,7 +50,7 @@ Go to the Microsoft website and download the Windows ISO from the links provided
 
 Install WoeUSB using the Fedora package repository:
 
-```
+```bash
 $ sudo dnf install WoeUSB
 ```
 
@@ -60,13 +60,13 @@ I'll use the `woeusb` command line rather than the `woeusbgui` since I'm using a
 
 > WARNING! All data on the USB key will be erased
 
-```
+```bash
 $ sudo woeusb --target-filesystem NTFS --device 17763.379.190312-0539.rs5_release_svc_refresh_SERVER_EVAL_x64FRE_en-us.iso /dev/sde
 ```
 
 Output:
 
-```
+```bash
 WoeUSB v3.2.12
 ==============================
 Mounting source filesystem...
@@ -115,13 +115,13 @@ It is a good idea to verify the USB drive is bootable before you reboot and find
 
 We can test the USB device using QEMU. If you don't have QEMU/KVM installed, you can install the package group using:
 
-```
+```bash
 $ sudo dnf install @virtualization
 ```
 
 Now we can create a new temporary Guest Virtual Machine without network and disks. We simply provide the USB device as the boot device and supply some Memory. The following uses our USB device (/dev/sde):
 
-```
+```bash
 $ qemu-system-x86_64 -hda /dev/sde -m 4G -machine pc,accel=kvm -enable-kvm -vnc :0 -daemonize
 ```
 

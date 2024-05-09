@@ -23,27 +23,27 @@ PCM can be built from source or installed using the [RPM or DEB files](https://d
 
 Building the PCM utility from source is very simple. First, we need to create a directory to work in:
 
-```
+```bash
 $ mkdir ~/downloads
 $ cd ~/downloads/
 ```
 
 Clone the git repository
 
-```
+```bash
 $ git clone https://github.com/opcm/pcm
 $ cd pcm
 ```
 
 Build pcm
 
-```
+```bash
 $ make
 ```
 
 By default, pcm will install to `/usr`. You can override this, say to `/usr/local`, or `/opt`, by setting the DESTDIR environment variable
 
-```
+```bash
 // Install to /usr (default)
 $ sudo make install
 
@@ -54,13 +54,13 @@ $ sudo --preserve-env=DESTDIR make install
 
 Confirm PCM is working by running `pcm-memory`. The following will collect three samples every second and exit.
 
-```
+```bash
 $ sudo pcm-memory -i=3 1
 ```
 
 Example:
 
-```
+```bash
 $ sudo pcm-memory -i=3 1
 [...snip...]
 |---------------------------------------||---------------------------------------|
@@ -113,7 +113,7 @@ $ sudo pcm-memory -i=3 1
 
 Add a port rule to the firewall for the PCM web server. The default port is `9738`, though it can be changed using the `-p <port>` option described in the help:
 
-```
+```bash
 $ pcm-sensor-server --help
 Usage: pcm-sensor-server [OPTION]
 
@@ -128,14 +128,14 @@ Valid Options:
     -h|--help            : This information
 ```
 
-```
+```bash
 $ sudo firewall-cmd --permanent --add-port=9738/tcp
 $ sudo firewall-cmd --reload
 ```
 
 Start the `pcm-sensor-server` and confirm it works by navigating to http://<ip-address|hostname>:9738 in your browser
 
-```
+```bash
 $ sudo pcm-sensor-server
 [...snip...]
 Starting plain HTTP server on http://localhost:9738/
@@ -149,11 +149,11 @@ You should see a simple web page that looks similar to the following:
 
 To run pcm-sensor-server as a systemd service, you need to create a service file, `/etc/systemd/system/pcm-sensor-server.service`, with the following content. Make any necessary changes for your environment.
 
-```
+```bash
 $ sudo vi /etc/systemd/system/pcm-sensor-server.service
 ```
 
-```
+```bash
 [Unit]
 Description=Process Counter Monitor (PCM) Sensor Service
 Wants=network-online.target
@@ -171,20 +171,20 @@ WantedBy=multi-user.target
 
 Reload systemd daemon configuration.
 
-```
+```bash
 $ sudo systemctl daemon-reload
 ```
 
 Start and Enable the pcm-sensor-service service to run at boot time.
 
-```
+```bash
 $ sudo systemctl start pcm-sensor-server
 $ sudo systemctl enable pcm-sensor-server
 ```
 
 Confirm the service is running
 
-```
+```bash
 $ systemctl status pcm-sensor-server
 ● pcm-sensor-server.service - Process Counter Monitor (PCM) Sensor Service
      Loaded: loaded (/etc/systemd/system/pcm-sensor-server.service; disabled; vendor preset: disabled)
@@ -206,7 +206,7 @@ We need to add the target host running the `pcm-sensor-server` to the list of kn
 
 Edit `/etc/prometheus.yml` and add the following content to the `scrape_config` section of the file, or add the new target to an existing job\_name group. This example includes our node\_exporter on port 9100 (see the [previous article](https://stevescargall.com/2020/05/13/how-to-install-prometheus-and-grafana-on-fedora-server/)), and pcm-sensor-server on port 9738.
 
-```
+```bash
 scrape_configs:
   [...]
   - job_name: pmem_nodes
@@ -216,7 +216,7 @@ scrape_configs:
 
 Restart Prometheus to pick up the new changes
 
-```
+```bash
 $ sudo systemctl restart prometheus
 $ sudo systemctl status prometheus
 ```

@@ -36,7 +36,7 @@ You can read more details about the `CPUFreq` Linux feature and configuration op
 
 Check the current mode:
 
-```
+```bash
 # cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 powersave
 powersave
@@ -47,13 +47,13 @@ powersave
 
 Switch to the 'performance' mode:
 
-```
+```bash
 $ echo "performance" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 ```
 
 Ensure the CPU scaling governor is in performance mode by checking the following; here you will see the setting from each processor (vcpu).
 
-```
+```bash
 # cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 performance
 performance
@@ -70,7 +70,7 @@ In this article we described the `CPUFreq` feature of the Linux Kernel and demon
 
 In Linux Kernel 5.5.5 I found there's an issue with the default value for `scaling_governor`:
 
-```
+```bash
 # cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
 cat: /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor: Invalid argument
 cat: /sys/devices/system/cpu/cpu10/cpufreq/scaling_governor: Invalid argument
@@ -84,7 +84,7 @@ I found an [ArchLinux Redit discussion](https://www.reddit.com/r/archlinux/comme
 
 There is a reported change in 5.3.3 - [https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.5.3](https://cdn.kernel.org/pub/linux/kernel/v5.x/ChangeLog-5.5.3)
 
-```
+```bash
     cpufreq: Avoid creating excessively large stack frames
     
     commit 1e4f63aecb53e48468661e922fc2fa3b83e55722 upstream.

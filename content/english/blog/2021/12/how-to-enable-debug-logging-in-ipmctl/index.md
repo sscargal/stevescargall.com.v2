@@ -41,7 +41,7 @@ The default log file location on Linux is `/var/log/ipmctl/debug.log` and is def
 
 To enable the feature, first check to see what log level is currently in-use. The following shows the default log level is 0 (zero):
 
-```
+```bash
 # ipmctl show -preferences
 
 CLI_DEFAULT_DIMM_ID=HANDLE
@@ -53,7 +53,7 @@ DBG_LOG_LEVEL=0
 
 Set the log level using:
 
-```
+```bash
 # ipmctl set -preferences DBG_LOG_LEVEL=4
 
 Set DBG_LOG_LEVEL=4: Success
@@ -61,7 +61,7 @@ Set DBG_LOG_LEVEL=4: Success
 
 Run an ipmctl command, eg:
 
-```
+```bash
 # ipmctl show -dimm
 
  DimmID | Capacity  | HealthState | ActionRequired | LockState | FWVersion
@@ -82,7 +82,7 @@ Run an ipmctl command, eg:
 
 Check the log file located in `/var/log/ipmctl/debug.log`:
 
-```
+```bash
 # head -12 /var/log/ipmctl/debug.log
 05/29/2020 21:52:55 	1	Debug	0	>00300020<	NVDIMM-DBG:PbrOs.c::PbrDeserializeCtx:196: PBR MODE from shared memory: 0  
 05/29/2020 21:52:55 	2	Debug	0	>00300020<	NVDIMM-DBG:PbrOs.c::PbrDeserializeCtx:204: pbr_ctx.tmp not found, setting to default value  
@@ -100,7 +100,7 @@ Check the log file located in `/var/log/ipmctl/debug.log`:
 
 In ipmctl version 2.x, you can dump the data to the terminal and record it using `tee`, eg:
 
-```
+```bash
 ipmctl create -v -goal persistentmemorytype=appdirect | tee -a /var/log/ipmctl/debug.log
 ```
 
@@ -131,7 +131,7 @@ The PBR file contains the following:
 
 ### Example:
 
-```
+```bash
 // Start recording the ipmctl commands
 # ipmctl start -session -mode record 
  
@@ -147,7 +147,7 @@ The PBR file contains the following:
 
 Example:
 
-```
+```bash
 # ipmctl start -session -mode record
 Setting to record mode.
 

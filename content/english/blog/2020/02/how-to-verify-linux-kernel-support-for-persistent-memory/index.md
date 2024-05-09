@@ -22,7 +22,7 @@ We'll use Fedoro for this article, but the process is the same or very similar f
 
 The config file is a plain text document that we can view to see what features are enabled or disabled. For this particular system, there's a total of 7,407 configurable entries of which 1,716 are currently commented out (disabled).
 
-```
+```bash
 // Count the number of configurable options
 grep CONFIG_ /boot/config-`uname -r` | wc -l
 7407
@@ -38,7 +38,7 @@ grep CONFIG_ /boot/config-`uname -r` | egrep "^\#" | wc -l
 
 To look for the persistent memory specific configuration options, use:
 
-```
+```bash
 # egrep -i "CONFIG_ZONE_DEVICE|NFIT|PMEM|_ND_|BTT|NVDIMM|DAX" /boot/config-`uname -r`
 CONFIG_X86_PMEM_LEGACY_DEVICE=y
 CONFIG_X86_PMEM_LEGACY=m

@@ -15,31 +15,31 @@ Occasionally, it is necessary to debug commands that are slow. Or you may simply
 
 To show a high-level view of where the time is being spent within libipmctl, use:
 
-```
+```bash
 # ltrace -c -o ltrace_library_count.out -l '*ipmctl*' ipmctl show -memoryresources
 ```
 
 To show a high-level view of where the time is being spent within libndctl, use:
 
-```
+```bash
 # ltrace -c -o ltrace_library_count.out -l '*ndctl*' ipmctl show -memoryresources
 ```
 
 To show a high-level view of where the time is being spent within libipmctl and libipmctl, use:
 
-```
+```bash
 # ltrace -c -o ltrace_library_count.out -l '*ipmctl*' -l '*ndctl*' ipmctl show -memoryresources
 ```
 
 To trace all libipmctl and libndctl functions, use:
 
-```
+```bash
 ltrace -l '*ndctl*' -l '*ipmctl*' ipmctl version
 ```
 
 To include the time spent within each function, use:
 
-```
+```bash
 ltrace -T -l '*ndctl*' -l '*ipmctl*' ipmctl version
 ```
 

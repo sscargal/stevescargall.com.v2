@@ -83,7 +83,7 @@ I chose to manually install and configure the guest OS using an ISO, but you may
 
 The `ndctl` utility is used to create and manage namespaces within Linux. Packages exist for most common Linux distributions and should be installed using the package manager for your Linux distro. We'll use `apt` since we are using Ubuntu. Instructions for other Linux distros or how to build the latest ndctl release from the source code can be found in the [NDCTL User Guide](https://docs.pmem.io/ndctl-user-guide/installing-ndctl).
 
-```
+```bash
 $ sudo apt install ndctl
 ```
 
@@ -97,7 +97,7 @@ The correct approach is to use the UUID (unique identifier) since it won't chang
 
 1. From the GuestVM, run the following to list the available NVDIMMs/PMem devices:
 
-```
+```bash
 guestvm $ sudo ndctl list -D
 [
   {
@@ -120,7 +120,7 @@ The "ID' field is the UUID we need.
 2. SSH into the ESXi host. **Note:** SSH is disabled by default, so you'll need to enable it. I found [How to Enable SSH on VMWare ESXi7.0](http://How to Enable SSH on VMware ESXi 7.0) to be useful in thie endevour.
 3. Identify the mount point for the PMem Virtual Filesystem
 
-```
+```bash
 esxi_host>$ df -h
 Filesystem   Size   Used Available Use% Mounted on
 VMFS-6     348.8G  19.7G    329.1G   6% /vmfs/volumes/datastore1
@@ -132,7 +132,7 @@ PMEM         5.9T   3.4G      5.9T   0% /vmfs/volumes/PMemDS-2ab23afe-ef87-eb45-
 
 4. Change directory to the mount point and find the Guest VM.
 
-```
+```bash
 esxi_host>$ cd /vmfs/volumes/PMemDS-2ab23afe-ef87-eb45-9e0d-8db94ea7740d
 esxi_host>$ ls
 pmem-guest-001
@@ -143,7 +143,7 @@ pmem-guest-001.vmdk    pmem-guest-001_1.vmdk
 
 5. Use the `vmkfstools` utility to extract the UUID from the vmdk files
 
-```
+```bash
 esxi_host>$ vmkfstools -J getuuid pmem-guest-001.vmdk
 UUID is 60 00 C2 98 42 c7 54 f8-02 c2 d4 9b 20 6b 08 0c
 

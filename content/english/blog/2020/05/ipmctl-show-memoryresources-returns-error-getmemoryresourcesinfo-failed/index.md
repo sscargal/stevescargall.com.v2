@@ -18,7 +18,7 @@ author: Steve Scargall
 
 Running `ipmctl show -memoryresources` returns an error similar to the following:
 
-```
+```bash
 # ipmctl show -memoryresources
 
 Error: GetMemoryResourcesInfo Failed
@@ -38,7 +38,7 @@ The Platform Configuration Data (PCD) is invalid or has been erased using a prev
 
 A module with an empty PCD will show information similar to the following. This shows an example of PCD of DIMM ID 0x0001. To review the PCD for all modules in the system use `ipmctl show -dimm -pcd`.
 
-```
+```bash
 # ipmctl show -dimm 0x0001 -pcd
 
 --DimmID:0x0001--
@@ -99,7 +99,7 @@ A module with an empty PCD will show information similar to the following. This 
 
 A valid PCD looks similar to the following:
 
-```
+```bash
 # ipmctl show -dimm 0x0001 -pcd
 
 --DimmID:0x0001--
@@ -235,7 +235,7 @@ A valid PCD looks similar to the following:
 
 Recreate the configuration. For example, the following creates an interleaved set of persistent memory modules in an AppDirect mode for each CPU socket. Read the ipmctl-create-goal(1) man page or the [provisioning documentation](https://docs.pmem.io/ipmctl-user-guide/provisioning/create-memory-allocation-goal) for more information on the different configuration options.
 
-```
+```bash
 # ipmctl create -goal persistentmemorytype=appdirect
 
 The following configuration will be applied:
@@ -274,13 +274,13 @@ A reboot is required to process new memory allocation goals.
 
 Reboot the host for the changes to take effect:
 
-```
+```bash
 $ sudo systemctl reboot
 ```
 
 After the host reboots, verify the `ipmctl show -memoryresources` command works as expected, eg:
 
-```
+```bash
 # ipmctl show -memoryresources
 
 Capacity=3029.5 GiB

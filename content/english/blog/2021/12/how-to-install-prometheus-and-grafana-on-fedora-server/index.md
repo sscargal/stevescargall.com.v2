@@ -23,7 +23,7 @@ We will install Prometheus and Grafana on a dedicated bare-metal host (10.100.11
 
 Before we proceed, it's good to note that the Prometheus server listens on TCP Port 9090. This is the same port that Fedora Cockpit listens on. As a result, if you are not using the Cockpit Web Service Manager, disable and stop both the service and socket to free port 9090.
 
-```
+```bash
 $ sudo netstat -tulpn | grep -i 9090
 tcp6       0      0 :::9090                 :::*                    LISTEN      1/systemd
 
@@ -38,7 +38,7 @@ $
 
 To create `prometheus` system user and group, run:
 
-```
+```bash
 $ sudo useradd -M -r -s /bin/false prometheus
 $ sudo getent passwd prometheus
 ```
@@ -51,7 +51,7 @@ On the monitoring master node download and install the Linux bundle. Use the lat
 
 Download Prometheus for Linux
 
-```
+```bash
 $ sudo wget -P /opt/ https://github.com/prometheus/prometheus/releases/download/v2.25.0/prometheus-2.25.0.linux-amd64.tar.gz
 $ cd /opt/
 $ sudo tar xf prometheus-2.25.0.linux-amd64.tar.gz
@@ -61,32 +61,32 @@ $ sudo chown -R prometheus:prometheus /opt/prometheus*
 
 Start prometheus to confirm it works. This will run in the foreground, so use Ctrl-C to stop it once you've confirmed no errors are reported
 
-```
+```bash
 $ sudo /opt/prometheus/prometheus
 ```
 
 If needed, you can start prometheus listening on a different port using:
 
-```
+```bash
 $ sudo /opt/prometheus/prometheus --web.listen-address=10.100.118.43:9060
 ```
 
 If the server starts, you should see a message similar to the following:
 
-```
+```bash
 level=info ts=2021-03-13T18:19:10.310Z caller=main.go:751 msg="Server is ready to receive web requests."
 ```
 
 Copy the `prometheus.yaml` file to /etc/. This will allow us to make configuration changes.
 
-```
+```bash
 $ sudo cp /opt/prometheus/prometheus.yml /etc/prometheus.yml
 $ sudo chown -R prometheus:prometheus /etc/prometheus.yml
 ```
 
 Edit the /etc/prometheus.yml file and make any necessary change(s). For example, to change the default listening port from 9090 to 9060 change
 
-```
+```bash
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
@@ -102,7 +102,7 @@ scrape_configs:
 
 Open the firewall
 
-```
+```bash
 $ sudo firewall-cmd --permanent --add-port=9090/tcp
 $ sudo firewall-cmd --reload
 ```
@@ -119,11 +119,11 @@ Note: Modern browsers such as Chrome, Edge, etc default to forcing HTTPS. If you
 
 To run Prometheus as a systemd service, you need to create a service file, `/etc/systemd/system/prometheus.service`, with the following content. Make any necessary changes for your environment.
 
-```
+```bash
 $ sudo vim /etc/systemd/system/prometheus.service
 ```
 
-```
+```bash
 [Unit]
 Description=Prometheus Time Series Collection and Processing Server
 Wants=network-online.target
@@ -146,20 +146,20 @@ WantedBy=multi-user.target
 
 Reload systemd daemon configuration.
 
-```
+```bash
 $ sudo systemctl daemon-reload
 ```
 
 Start and Enable Prometheus service to run at boot time.
 
-```
+```bash
 $ sudo systemctl start prometheus
 $ sudo systemctl enable prometheus
 ```
 
 Confirm the service is running
 
-```
+```bash
 # systemctl status prometheus
 ● prometheus.service - Prometheus Time Series Collection and Processing Server
      Loaded: loaded (/etc/systemd/system/prometheus.service; enabled; vendor preset: disabled)
@@ -197,7 +197,7 @@ Download Node\_Exporter for Prometheus
 
 We need to create a user and group. The [instructions](https://github.com/prometheus/node_exporter/tree/master/examples/systemd) say the systemd service needs a user named `node_exporter`, whose shell should be `/sbin/nologin` and should not have any special privileges.
 
-```
+```bash
 $ sudo useradd -M -r -s /sbin/nologin node_exporter
 $ sudo getent passwd node_exporter
 ```
@@ -206,7 +206,7 @@ $ sudo getent passwd node_exporter
 
 Install node\_exporter to /opt on the target system.
 
-```
+```bash
 $ sudo wget -P /opt/ https://github.com/prometheus/node_exporter/releases/download/v1.1.2/node_exporter-1.1.2.linux-amd64.tar.gz
 $ cd /opt/
 $ sudo tar xf node_exporter-1.1.2.linux-amd64.tar.gz
@@ -217,14 +217,14 @@ $ sudo /opt/prometheus_node_exporter/node_exporter --web.listen-address="0.0.0.0
 
 Open port 9100 in the firewall
 
-```
+```bash
 $ sudo firewall-cmd --permanent --add-port=9100/tcp
 $ sudo firewall-cmd --reload
 ```
 
 Use a web browser to verify the connection is working - http://10.100.118.42:9100/metrics. This will return the metrics which looks like this:
 
-```
+```bash
 # HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.
 # TYPE go_gc_duration_seconds summary
 go_gc_duration_seconds{quantile="0"} 0.000108763
@@ -248,11 +248,11 @@ Use Ctrl-C to stop the process and we'll create a systemd service to manage Node
 
 To be able to run the Node Exporter as a service, you need to create a systemd service file, `/etc/systemd/system/node_exporter.service`, configured as follows.
 
-```
+```bash
 $ sudo vi /etc/systemd/system/node_exporter.service
 ```
 
-```
+```bash
 [Unit]
 Description=Node Exporter
 
@@ -269,7 +269,7 @@ WantedBy=multi-user.target
 
 Create the required directories
 
-```
+```bash
 $ sudo mkdir -p /var/lib/node_exporter/textfile_collector
 $ sudo chown node_exporter:node_exporter /var/lib/node_exporter/textfile_collector
 $ sudo touch /etc/sysconfig/node_exporter
@@ -278,20 +278,20 @@ $ sudo chown node_exporter:node_exporter /etc/sysconfig/node_exporter
 
 Reload systemd daemon configuration.
 
-```
+```bash
 $ sudo systemctl daemon-reload
 ```
 
 Start and Enable Prometheus service to run at boot time.
 
-```
+```bash
 $ sudo systemctl start node_exporter
 $ sudo systemctl enable node_exporter
 ```
 
 Confirm the service is running
 
-```
+```bash
 $sudo systemctl status node_exporter
 ● node_exporter.service - Node Exporter
      Loaded: loaded (/etc/systemd/system/node_exporter.service; enabled; vendor preset: disabled)
@@ -302,8 +302,6 @@ $sudo systemctl status node_exporter
         CPU: 21ms
      CGroup: /system.slice/node_exporter.service
              └─5662 /opt/prometheus_node_exporter/node_exporter --web.listen-address=0.0.0.0:9100 --collector.textfile.directory /var/lib>
-
-
 ```
 
 ## Add the Target Node to Prometheus
@@ -312,7 +310,7 @@ We need to add the target host running the node\_exporter to the list of known h
 
 Edit /etc/prometheus.yml and add the following content to the scrape\_config section of the file
 
-```
+```bash
 $ sudo vi /etc/prometheus.yml
 scrape_configs:
 [...]
@@ -323,7 +321,7 @@ scrape_configs:
 
 Restart Prometheus to pick up the new changes
 
-```
+```bash
 $ sudo systemctl restart prometheus
 $ sudo systemctl status prometheus
 ```
@@ -340,7 +338,7 @@ See the instructions here - [https://grafana.com/docs/grafana/latest/installatio
 
 Add the Grafana package repository:
 
-```
+```bash
 $ cat <<EOF | sudo tee /etc/yum.repos.d/grafana.repo
 [grafana]
 name=grafana
@@ -356,20 +354,20 @@ EOF
 
 Install Grafana:
 
-```
+```bash
 $ sudo dnf -y install grafana
 ```
 
 To start grafana service and enable it to start on boot, run:
 
-```
+```bash
 $ sudo systemctl start grafana-server
 $ sudo systemctl enable grafana-server
 ```
 
 Confirm the service state:
 
-```
+```bash
 $ sudo systemctl status grafana-server
 ● grafana-server.service - Grafana instance
      Loaded: loaded (/usr/lib/systemd/system/grafana-server.service; enabled; vendor preset: disabled)
@@ -388,7 +386,7 @@ The default HTTP port is **3000.** You can change this by editing the configura
 
 Open port 3000 in the firewall
 
-```
+```bash
 $ sudo firewall-cmd --permanent --add-port=3000/tcp
 $ sudo firewall-cmd --reload
 ```
@@ -401,7 +399,7 @@ Grafana Login Screen
 
 The default login credentials is:
 
-```
+```bash
 username: admin
 Password: admin
 ```

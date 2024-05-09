@@ -39,27 +39,27 @@ Requirements:
 
 1\. If ndctl/daxctl v65.0 or later is available in the Linux package repository for your distribution, install or update to the latest version using the package manager command (apt, dnf, rpm, yum, etc). Once installed, you can skip to Step 5. Otherwise, clone `ndctl` from GitHub and build it from source code using Steps 1-4:
 
-```
+```bash
 $ mkdir /downloads
 $ git clone https://github.com/pmem/ndctl
 ```
 
 2\. Make sure you're using the 'master' branch.
 
-```
+```bash
 $ git branch    <-- Use git branch -a to show all branches
 * master
 ```
 
 3\. Install the ndctl prerequisites. See the instructions [here](https://docs.pmem.io/getting-started-guide/installing-ndctl#installing-ndctl-from-source-on-linux) for more Linux distributions.
 
-```
+```bash
 $ sudo dnf install git gcc gcc-c++ autoconf automake asciidoc asciidoctor xmlto libtool pkg-config glib2 glib2-devel libfabric libfabric-devel doxygen graphviz pandoc ncurses kmod kmod-devel libudev-devel libuuid-devel json-c-devel keyutils-libs-devel
 ```
 
 4\. Configure and Build `ndctl` and `daxctl` within the current directory. If you want to install these binaries, I recommend a non-default location such as /opt rather than /usr/local to avoid conflicting or overwriting libraries and binaries that are delivered with your Linux package repository.
 
-```
+```bash
 $ cd /downloads/ndctl 
 $ ./autogen.sh
 $ ./configure CFLAGS='-g -O2' --prefix=/opt/ndctl --sysconfdir=/etc --libdir=/opt/ndctl/lib64
@@ -69,7 +69,7 @@ $ sudo make install <--- optional
 
 5\. For this example, we will create a 12GiB DAX namespace from the available capacity in Region0. To learn more about provisioning persistent memory [watch this webinar recording](https://software.intel.com/en-us/videos/provisioning-intel-optane-dc-persistent-memory-modules-in-linux).
 
-```
+```bash
 $ sudo ndctl create-namespace --mode=dax --region=0 --size=12g
 {
   "dev":"namespace0.1",
@@ -96,7 +96,7 @@ Make a note of the 'chardev' as it will be required when we convert it to a 'sys
 
 6\. Check the current memory configuration and resources using your favorite tool(s) to get a before snapshot. Here, we use the `lsmem` command to show the current memory layout.
 
-```
+```bash
 $ lsmem
 RANGE                                  SIZE  STATE REMOVABLE   BLOCK
 0x0000000000000000-0x000000007fffffff    2G online        no       0
@@ -124,7 +124,7 @@ The `daxctl reconfigure-device` command can be used to convert a regular `devdax
 
 We will use the previously created dax0.1 device and initially configure it in an 'offline' state such that the capacity is not automatically assigned to the DRAM capacity. You can provision it in one step, but I prefer this approach in case the conversion fails for some reason which makes it easier to undo the operation.
 
-```
+```bash
 $ sudo daxctl reconfigure-device --mode=system-ram --no-online dax0.1
 [
   {
@@ -139,7 +139,7 @@ reconfigured 1 device
 
 Your Kernel doesn't support this feature if you see the following error.
 
-```
+```bash
 # daxctl reconfigure-device --mode=system-ram --no-online dax0.0
 libkmod: kmod_module_insert_module: could not find module by name='kmem'
 libdaxctl: daxctl_insert_kmod_for_mode: dax0.0: insert failure: -2
@@ -149,7 +149,7 @@ reconfigured 0 devices
 
 Some Linux distributions, such as CentOS, may not enable the required 'device migration model' feature by default. This results in the following error:
 
-```
+```bash
 # daxctl reconfigure-device --mode=system-ram --no-online dax0.0
 libdaxctl: daxctl_dev_disable: dax0.0: error: device model is dax-class
 libdaxctl: daxctl_dev_disable: dax0.0: see man daxctl-migrate-device-model
@@ -160,7 +160,7 @@ reconfigured 0 devices
 
 Do the following to resolve the issue:
 
-```
+```bash
 // Enable the migrate device model daxctl support.
 // Note: This does not take effect immediately!
 
@@ -209,7 +209,7 @@ reconfigured 1 device
 We will use the `daxctl online-memory` command which is complementary to the `daxctl-reconfigure-device` command, when used with the `--no-online` option to skip onlining memory sections immediately after the  
 reconfigure. In these scenarios, the memory can be onlined at a later time using the `daxctl-online-memory` command below.
 
-```
+```bash
 $ sudo daxctl online-memory dax0.1
 dax0.1: 5 sections already online
 dax0.1: 0 new sections onlined
@@ -218,7 +218,7 @@ onlined memory for 1 device
 
 9\. Verify the system volatile memory capacity has grown
 
-```
+```bash
 $ lsmem
 RANGE                                  SIZE  STATE REMOVABLE   BLOCK
 0x0000000000000000-0x000000007fffffff    2G online        no       0
@@ -241,7 +241,7 @@ We didn't add all 12GB because the memory block size is 2GB and we used a small 
 
 Looking at the hardware layout of the system NUMA nodes shows we have two new memory-only nodes (nodes 2 & 3):
 
-```
+```bash
 # numactl -H
 available: 4 nodes (0-3)
 node 0 cpus: 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71
@@ -270,7 +270,7 @@ Bingo! It's really quite easy and simple.
 
 With the memory configured, there are several ways to utilize it. The simplest is to use the `numactl` utility to bind an application or process to it. For example, we can start a new process and bind it to specific CPU NUMA nodes and Memory NUMA Nodes that use only persistent memory:
 
-```
+```bash
 numactl --cpunodebind=0-1 --membind=2 command [options]
 ```
 
@@ -282,7 +282,7 @@ Assigning new memory is far easier than trying to unassign or deallocate it as e
 
 1\. Offline the Memory
 
-```
+```bash
 $ sudo daxctl offline-memory dax0.1
 dax0.0: 62 sections offlined
 offlined memory for 1 device
@@ -290,7 +290,7 @@ offlined memory for 1 device
 
 2\. Destroy the DAX Device
 
-```
+```bash
 $ sudo ndctl list -N
 [
   {
@@ -308,7 +308,7 @@ $ sudo ndctl destroy-namespace namespace0.1
 
 An example of what a failure looks like is:
 
-```
+```bash
 $ sudo daxctl offline-memory dax0.1
 libdaxctl: offline_one_memblock: dax0.1: Failed to offline /sys/devices/system/node/node2/memory107/state: Device or resource busy
 dax0.1: unable to offline memory: Device or resource busy
@@ -318,7 +318,7 @@ offlined memory for 0 devices
 
 In this particular example, the reason for the failure is that the Kernel has already used the new memory for running processes:
 
-```
+```bash
 # fuser -c /dev/dax0.1
 /dev/dax0.1:             1   491rc  1588  1636  2209  2212  2250  2278  2279  2280  2282  2293  2294  2297  2299  2301  2303  2305  2320  2324  2328  2330  2331  2334  2336  2362  2364  2370  2374  2380  2433  2434  2604  2606  9892  9895 14262 22846 22847 22849 30785 30789
 ```

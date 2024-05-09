@@ -18,7 +18,7 @@ Keen to try this new feature to identify the working set size (Active Memory) of
 
 To use this feature, you should first ensure your system is running on a kernel that is built with CONFIG\_DAMON\_RECLAIM=y. To check if your kernel was built with the DAMON feature, run the following:
 
-```
+```bash
 $ grep CONFIG_DAMON /boot/config-$(uname -r)
 ```
 
@@ -29,20 +29,20 @@ At the time of writing - 23rd December 2021 - neither the latest stable Fedora K
 
 Install the dependencies for building Kernels
 
-```
+```bash
 sudo dnf install fedpkg fedora-packager rpmdevtools ncurses-devel pesign grubby
 ```
 
 Create a build directory
 
-```
+```bash
 mkdir ~/downloads
 cd ~/downloads
 ```
 
 Clone the Linus Torvalds kernel main branch from kernel.org. This is the bleeding edge release. This will clone the entire upstream tree and may take a while depending on your Internet connection speed.
 
-```
+```bash
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
 - or -
 git clone https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
@@ -52,7 +52,7 @@ cd linux
 
 If you prefer a stable Kernel release, use:
 
-```
+```bash
 git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 - or -
 git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
@@ -62,13 +62,13 @@ cd linux
 
 Create a Kernel configuration file `.config` in the current directory
 
-```
+```bash
 make oldconfig
 ```
 
 Add the following DAMON entries to the `.config` file. Open the file for editing and locate the DAMON section which should look something like this:
 
-```
+```bash
 #
 # Data Access Monitoring
 #
@@ -79,7 +79,7 @@ Add the following DAMON entries to the `.config` file. Open the file for editing
 
 Add the following entries so your .config file now looks like this:
 
-```
+```bash
 #
 # Data Access Monitoring
 #
@@ -98,7 +98,7 @@ CONFIG_DAMON_RECLAIM=y
 
 Start the building process using all available CPUs
 
-```
+```bash
 make -j$(nproc)
 make bzImage
 make modules
@@ -106,7 +106,7 @@ make modules
 
 Assuming no errors were reported during the build phase, install the new Kernel
 
-```
+```bash
 sudo make modules_install
 sudo make install
 ```
@@ -115,19 +115,19 @@ Reboot the host. The kernel is unlikely to be the default option in GRUB, so mak
 
 Copy the config file to /boot for future reference
 
-```
+```bash
 cp ~/downloads/linux/.config /boot/config-$(uname -r)
 ```
 
 Once you have tested the Kernel, you may choose to remove the source code to free space on your storage.
 
-```
+```bash
 rm -rf ~/downloads/linux
 ```
 
 To let sysadmins enable or disable it and tune for the given system, **DAMON**\_RECLAIM utilizes module parameters. That is, you can put `**damon**_reclaim.<parameter>=<value>` on the kernel boot command line or write proper values to `/sys/modules/damon_reclaim/parameters/<parameter>` files.
 
-```
+```bash
 # ls /sys/module/damon_reclaim/parameters/
 aggr_interval  max_nr_regions  monitor_region_end    quota_reset_interval_ms  wmarks_high      wmarks_mid
 enabled        min_age         monitor_region_start  quota_sz                 wmarks_interval
@@ -142,7 +142,7 @@ A user-space tool for DAMON, called [DAMO](https://github.com/awslabs/damo) is
 
 To use the latest development release from GitHub, clone the repository:
 
-```
+```bash
 mkdir ~/downloads
 cd ~/downloads
 git clone https://github.com/awslabs/damo
@@ -151,7 +151,7 @@ cd damo
 
 Getting help:
 
-```
+```bash
 # ./damo version
 1.0.9
 

@@ -18,7 +18,7 @@ On Linux or Mac, if you have setup a development environment then you have all t
 
 You can use either of the following to display the configuration:
 
-```
+```bash
 git config --list
 git config -l
 ```
@@ -27,7 +27,7 @@ or look at your `~/.gitconfig` file. The local configuration will be in your r
 
 Use:
 
-```
+```bash
 git config --list --show-origin
 ```
 
@@ -35,7 +35,7 @@ to see where that setting is defined (global, user, repo, etc...).
 
 Alternatively, you can filter the results, using `--global`, `--local`, and `--system`:
 
-```
+```bash
 git config --list --global
 git config --list --local
 git config --list --system
@@ -43,7 +43,7 @@ git config --list --system
 
 To edit a configuration, use:
 
-```
+```bash
 git config --global --edit
 git config --local --edit
 git config --system --edit
@@ -55,14 +55,14 @@ This will drop you into your default editor where you can add, remove, or make c
 
 If you haven't already configured your name and email address within Git, use the following to make changes to the local Git project:
 
-```
+```bash
 git config user.name 'Steve Scargall'
 git config user.email 'noreply@stevescargall.com'
 ```
 
 If you want to make the changes apply across all Git projects, use:
 
-```
+```bash
 git config --global user.name 'Steve Scargall'
 git config --global user.email 'noreply@stevescargall.com'
 ```
@@ -71,13 +71,13 @@ git config --global user.email 'noreply@stevescargall.com'
 
 Use the following `gpg` command to interactively create the public/private key pair:
 
-```
+```bash
 gpg --full-generate-key
 ```
 
 Use the maximum key size available, likely 4096, and ensure the key does not expire. You'll be prompted with several questions shown below:
 
-```
+```bash
 $ gpg --full-generate-key
 gpg (GnuPG) 2.2.17; Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software: you are free to change and redistribute it.
@@ -119,13 +119,13 @@ Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
 
 To make sure your GPG key pair is created, run following command and verify output.
 
-```
+```bash
 gpg --list-secret-keys --keyid-format LONG
 ```
 
 You will see something similar to this:
 
-```
+```bash
 $ gpg --list-secret-keys --keyid-format LONG
 gpg: checking the trustdb
 gpg: marginals needed: 3  completes needed: 1  trust model: pgp
@@ -144,13 +144,13 @@ Copy the key ID from the output. The key ID in the above example is **3AC5D24571
 
 Display your public key on the terminal:
 
-```
+```bash
 gpg --armor --export 3AC5D24571557BB1
 ```
 
 It will display the GPG key including both header and footer text, something like this:
 
-```
+```bash
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 KEY_CONTENT....
 -----END PGP PUBLIC KEY BLOCK-----
@@ -168,7 +168,7 @@ Copy and paste the public key from the `gpg --armor --export 3AC5D24571557BB1` c
 
 To sign your git commits, you will need to specify a GPG program. Try following commands
 
-```
+```bash
 // on Windows
 $ git config --global gpg.program "/c/Program Files (x86)/GnuPG/bin/gpg.exe"
 
@@ -182,21 +182,21 @@ $ git config --global gpg.program "/usr/local/bin/gpg"
 
 To specify a key for auto-sign commits in a single repository, execute these commands:
 
-```
+```bash
 git config user.signingkey 3AC5D24571557BB1 
 git config commit.gpgsign true
 ```
 
 If you want to use this GPG key ID for all Git repositories use the `--global` option.
 
-```
+```bash
 git config --global user.signingkey 3AC5D24571557BB1 
 git config --global commit.gpgsign true
 ```
 
 If you do not want to auto-sign every commit, you do not have to run the above commands. Instead, you can sign individual commits using (-S) and add a "Signed-off-by" signature with (-s):
 
-```
+```bash
 git commit -s -S -m "your commit message"
 ```
 
@@ -204,7 +204,7 @@ git commit -s -S -m "your commit message"
 
 To avoid the following error:
 
-```
+```bash
 $ git commit -m "My Message"
 error: gpg failed to sign the data
 fatal: failed to write commit object
@@ -212,13 +212,13 @@ fatal: failed to write commit object
 
 I found that I had to disable TTY for gpg using:
 
-```
+```bash
 echo 'no-tty' >> ~/.gnupg/gpg.conf
 ```
 
 I also found the following helped:
 
-```
+```bash
 export GPG_TTY=$(tty)
 ```
 
