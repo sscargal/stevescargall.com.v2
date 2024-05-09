@@ -35,6 +35,35 @@ The first step was planning. I knew I wanted a versatile machine that could hand
 
 {{< slider dir="gallery_sketchup">}}
 
+## Bill of Materials (BoM)
+
+Here is a list of materials used to build the arcade machine. It does not include tools.
+
+**Hardware:**
+- 2 x 4' x 8' 5/8" MDF (Main Cabinet)
+- 1 x 4' x 4' 1/2" MDF (Front)
+- 1 x 4' x 8' 1/4" MDF (Rear Door)
+- Lexan (for the Marquee and Screen protection)
+- 5/8" T-Moulding (white)
+- Joysticks and Buttons
+  - [X-Arcade Wiring Harness](https://shop.xgaming.com/products/x-arcade-wiring-harness)
+  - [Two Player Complete Do It Yourself Arcade Kit](https://shop.xgaming.com/products/two-player-complete-do-it-yourself-arcade-kit)
+- Monitor: Samsung SyncMaster 245BW 24" Widescreen LCD Monitor
+- PC
+  - CPU: AMD FX-6300 - FX-6000 Series Vishera 6-Core 3.5 GHz Socket AM3+ 95W Desktop Processor - FD6300WMHKBOX
+  - GPU: ASUS GeForce GTX 750 Ti 2GB GDDR5 PCI Express 3.0 Video Card GTX750TI-OC-2GD5
+  - PSU: CORSAIR CSM Series CS450M 450 W ATX12V v2.4 and EPS 2.92 80 PLUS GOLD Certified Semi-Modular Active PFC Power Supply
+  - Motherboard: ASUS M5A97 LE R2.0 970 AM3+
+  - Memory: G.SKILL Ripjaws X Series 8GB (2 x 4GB) DDR3 1866 (PC3 14900) Desktop Memory Model F3-14900CL9D-8GBXL
+  - HDD: Western Digital Blue WD10EZEX 1TB 7200 RPM 64MB Cache SATA 6.0Gb/s 3.5"
+
+**Software:**
+- OS: Microsoft Windows 10
+- MAME Frontend: [Maximus Arcade](https://maximus-arcade.com/)
+- MAME ROMs: [The Old Computer](https://www.theoldcomputer.com/)
+- [Affinity Designer](https://affinity.serif.com/en-us/designer/) to create the graphics
+
+
 ## Building the Cabinet
 
 Next came the fun part: building the cabinet itself. I opted for MDF, a sturdy and relatively inexpensive, and easy to work with material. Using my SketchUp design, I meticulously hand-cut each piece. The joysticks, buttons, and even the coin door were all sourced from online retailers –  there's a thriving community dedicated to building arcade machines, which made finding parts surprisingly easy.
