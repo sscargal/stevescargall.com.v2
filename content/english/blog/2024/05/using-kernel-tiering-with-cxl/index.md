@@ -1,5 +1,5 @@
 ---
-title: "Enabling Linux Kernel Tiering with Compute Express Link (CXL) Memory"
+title: "Using Linux Kernel Tiering with Compute Express Link (CXL) Memory"
 meta_title: ""
 description: ""
 date: 2024-05-09T00:00:00Z
