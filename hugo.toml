@@ -31,6 +31,8 @@ shortname = '' # we use disqus to show comments in blog posts . To install disqu
 [permalinks.page]
 "pages" = "/:slugorfilename/"
 
+[permalinks]
+  blog = "/blog/:year/:month/:title/"
 
 ############################# Modules ############################
 [module]
