@@ -8,6 +8,8 @@ categories: ["How To"]
 author: "Steve Scargall"
 tags: ["ChatGPT", "Open WebUI", "Ubuntu", "Ollama", "AI"]
 draft: false
+aliases:
+    - /blog/2024/05/10/running-open-webui-and-ollama-on-ubuntu-22.04-for-a-local-chatgpt-experience/
 ---
 
 ## Introduction

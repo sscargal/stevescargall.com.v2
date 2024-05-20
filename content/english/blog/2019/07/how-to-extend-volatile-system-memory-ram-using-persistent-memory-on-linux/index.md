@@ -13,6 +13,8 @@ tags:
   - "pmem"
 image: "images/pexels-photo-2588757.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2019/07/09/how-to-extend-volatile-system-memory-ram-using-persistent-memory-on-linux/
 ---
 
 [Intel(R) Optane(TM) Persistent Memory](https://www.intel.com/content/www/us/en/architecture-and-technology/optane-dc-persistent-memory.html) delivers a unique combination of affordable large capacity and support for data persistence. Electrically compatible with DDR4, large capacity modules up to 512GB each can be installed in compatible servers alongside DDR on the memory bus.

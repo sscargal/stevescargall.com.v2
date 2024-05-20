@@ -8,6 +8,8 @@ categories: ["CXL"]
 author: "Steve Scargall"
 tags: ["CXL", "Linux", "Kernel"]
 draft: false
+aliases:
+ - /blog/2024/05/13/linux-kernel-6.9-is-released-this-is-whats-new-for-compute-express-link-cxl/
 ---
 
 The Linux Kernel 6.9 release brings several improvements and additions related to Compute Express Link (CXL) technology. 

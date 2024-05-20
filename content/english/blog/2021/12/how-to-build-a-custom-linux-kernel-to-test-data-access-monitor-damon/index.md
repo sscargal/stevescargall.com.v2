@@ -10,6 +10,8 @@ tags:
   - "wss"
 image: "images/pexels-photo-577585.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2021/12/23/how-to-build-a-custom-linux-kernel-to-test-data-access-monitor-damon/
 ---
 
 [DAMON](https://sjp38.github.io/post/damon) is a data access monitoring framework subsystem for the Linux kernel. DAMON (Data Access MONitor) tool monitors memory access patterns specific to user-space processes introduced in Linux kernel 5.15 LTS, such as operation schemes, physical memory monitoring, and proactive memory reclamation. It was designed and implemented by Amazon AWS Labs and [upstreamed into the 5.15 Kernel](https://www.phoronix.com/scan.php?page=news_item&px=DAMON-For-Linux-5.15), but it was not enabled by default.cd /boot

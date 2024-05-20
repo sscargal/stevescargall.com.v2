@@ -15,6 +15,8 @@ tags:
   - "qemu"
 image: "images/CXL_Logo.jpg"
 author: Steve Scargall
+aliases:
+  - /blog/2022/01/20/how-to-emulate-cxl-devices-using-kvm-and-qemu/
 ---
 
 ## What is CXL?

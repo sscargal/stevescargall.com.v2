@@ -9,6 +9,8 @@ tags:
   - "percona"
 image: "images/speaking-wide.jpg"
 Author: Steve Scargall
+aliases:
+  - /blog/2019/04/04/percona-live-2019/
 ---
 
 I will be speaking at this year's Percona Live event. Percona Live 2019 takes place in Austin, Texas from May 28-30, 2019 at the [Hyatt Regency](https://www.hyatt.com/en-US/hotel/texas/hyatt-regency-austin/ausra). You can [register](https://www.percona.com/live/19/register) for the event and check out the [schedule](https://www.percona.com/live/19/schedule/day-1) of talks. See you there.

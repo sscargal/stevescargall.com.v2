@@ -11,6 +11,8 @@ tags:
   - "persistent-memory"
   - "pmem"
 author: Steve Scargall
+asliases:
+  - /blog/2020/05/30/intel-optane-persistent-memory-modules-report-non-functional-state-in-ipmctl/
 ---
 
 ## Issue

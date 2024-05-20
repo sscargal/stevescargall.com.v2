@@ -9,6 +9,8 @@ tags:
   - "kernel"
 image: "images/pexels-photo-97077.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2020/09/14/how-to-build-an-upstream-fedora-kernel-from-source/
 ---
 
 I typically keep my Fedora system current, updating it once every week or two. More recently, I wanted to test the [Idle Page Tracking](https://www.kernel.org/doc/html/latest/admin-guide/mm/idle_page_tracking.html#) feature, but this wasn't enabled in the default kernel provided by Fedora.

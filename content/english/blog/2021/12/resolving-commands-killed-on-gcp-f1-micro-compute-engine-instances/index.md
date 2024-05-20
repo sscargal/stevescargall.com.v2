@@ -5,6 +5,8 @@ categories:
   - "linux"
 image: "images/pexels-photo-207580.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2021/12/21/resolving-commands-killed-on-gcp-f1-micro-compute-engine-instances/
 ---
 
 When I want to perform a quick task, I generally spin up a Google GCP Compute Engine instance as they're cheap. However, they have limited resources, particularly memory. When refreshing the package repositories, it's quite easy to encounter an Out-of-Memory (OOM) situation which results in the command - yum or dnf - is 'killed'. For example:

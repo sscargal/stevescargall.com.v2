@@ -8,6 +8,8 @@ categories: ["CXL"]
 author: "Steve Scargall"
 tags: ["CXL", "Compute Express Link", "PCIe", "Napkin Math"]
 draft: false
+asliases:
+    - /blog/2024/05/07/understanding-compute-express-link-cxl-and-its-alignment-with-the-pcie-specifications/
 ---
 
 ## How CXL Uses PCIe Electricals and Transport Layers

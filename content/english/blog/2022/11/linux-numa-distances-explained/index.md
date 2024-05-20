@@ -9,6 +9,8 @@ tags:
   - "numa"
 image: "images/pexels-photo-2044443.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2022/11/03/linux-numa-distances-explained/
 ---
 
 **TL;DR:** The memory latency distances between a node and itself is normalized to 10 (1.0x). Every other distance is scaled relative to that 10 base value. For example, the distance between NUMA Node 0 and 1 is 21 (2.1x), meaning if node 0 accesses memory on node 1 or vice versa, the access latency will be 2.1x more than for local memory.

@@ -16,6 +16,8 @@ tags:
   - "pmem"
 image: "images/disc-reader-reading-arm-hard-drive.jpg"
 author: Steve Scargall
+aliases:
+  - /blog/2020/05/31/linux-device-mapper-writecache-dm-writecache-performance-improvements-in-linux-kernel-5.8/
 ---
 
 The Linux 'dm-writecache' target allows for writeback caching of newly written data to an SSD or NVMe using persistent memory will achieve much better performance in Linux Kernel 5.8.

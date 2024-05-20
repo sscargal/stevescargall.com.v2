@@ -20,6 +20,10 @@ categories = ['how to', 'linux']
 image = 'server_featured_image_900x600-min.jpeg'
 
 author = "Steve Scargall"
+
+aliases = [
+	"/blog/2023/05/02/a-practical-guide-to-identify-compute-express-link-cxl-devices-in-your-server/"
+]
 +++
 
 

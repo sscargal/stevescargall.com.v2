@@ -8,6 +8,8 @@ categories: ["CXL"]
 author: "Steve Scargall"
 tags: ["CXL", "Compute Express Link", "Linux", "Kernel"]
 draft: false
+aliases:
+    - blog/2024/05/09/linux-kernel-6.9-is-released-this-is-whats-new-for-compute-express-link-cxl/
 ---
 
 In this blog post, we will walk through the process of enabling the Linux Kernel Transparent Page Placement (TPP) feature with CXL memory mapped as NUMA nodes using the system-ram namespace. This feature allows the kernel to automatically place pages in different types of memory based on their usage patterns.

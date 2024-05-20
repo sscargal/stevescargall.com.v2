@@ -13,6 +13,8 @@ tags:
   - "tiered-memory"
 image: "images/pexels-photo-355863.jpeg"
 author: Steve Scargall
+aliases: 
+  - /blog/2022/06/10/using-linux-kernel-memory-tiering/
 ---
 
 In this post, I'll discuss what memory tiering is, why we need it, and how to use the memory tiering feature available in the mainline v5.15 Kernel.

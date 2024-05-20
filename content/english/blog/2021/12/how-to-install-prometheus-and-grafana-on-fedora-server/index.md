@@ -9,6 +9,8 @@ tags:
   - "prometheus"
 image: "images/aptira_grafana_prometheus_training.png"
 author: Steve Scargall
+aliases:
+  - /blog/2021/12/05/how-to-install-prometheus-and-grafana-on-fedora-server/
 ---
 
 \[Updated\] This article was updated on 03/13/2021 using Fedora Server 33, [Prometheus](https://prometheus.io/download/) v2.25.0, [Grafana](https://grafana.com/) v7.4.3, and [Node Exporter](https://github.com/prometheus/node_exporter) v1.1.2.

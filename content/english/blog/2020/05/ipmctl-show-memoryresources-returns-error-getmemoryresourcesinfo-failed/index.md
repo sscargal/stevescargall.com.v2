@@ -12,6 +12,8 @@ tags:
   - "windows"
 image: "images/pexels-photo-4439425.jpeg"
 author: Steve Scargall
+aliases:
+   - /blog/2020/05/30/ipmctl-show-memoryresources-returns-error-getmemoryresourcesinfo-failed/
 ---
 
 ## Issue:

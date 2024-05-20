@@ -7,6 +7,8 @@ categories:
   - "linux"
 image: "images/PCI-Express-slots-on-motherboard.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2022/12/27/how-to-map-a-cxl-endpoint-to-a-cpu-socket-in-linux/
 ---
 
 When working with CXL Type 3 Memory Expander endpoints, it's nice to know which CPU Socket owns the root complex for the endpoint. This is very useful for memory tiering solutions where we want to keep the execution of application processes and threads 'local' to the memory.

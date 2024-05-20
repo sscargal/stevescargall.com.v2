@@ -14,6 +14,8 @@ tags:
   - "pmem"
 image: "images/pexels-photo-577585.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2021/12/05/how-to-enable-debug-logging-in-ipmctl/
 ---
 
 The [ipmctl](https://github.com/intel/ipmctl) utility is used for configuring and managing Intel Optane Persistent Memory modules (DCPMM/PMem). It supports the functionality to:

@@ -1,5 +1,15 @@
 ---
 title: "How To Install a Mainline Linux Kernel in Ubuntu"
+meta_title: ""
+description: ""
+date: 2023-04-13T00:00:00Z
+image: "featured_image_002.webp"
+categories: ["How To"]
+author: "Steve Scargall"
+tags: ["Mainline", "Linux", "Kernel", "Ubuntu"]
+draft: false
+aliases:
+    - /blog/04/13/how-to-install-a-mainline-linux-kernel-in-ubuntu/
 ---
 
 By default, Ubuntu systems run with the Ubuntu kernels provided by the Ubuntu repositories. To get unmodified upstream kernels that have new features or to confirm that upstream has fixed a specific issue, we often need to install the mainline Kernel. The mainline kernel is the most recent version of the Linux kernel released by the Linux Kernel Organization. It undergoes several stages of development, including merge windows, release candidates, and final releases. Mainline kernels are designed to offer the latest features and improvements, making them attractive to developers and power users. [Kernel.org](https://www.kernel.org/) lists the available Kernel versions. 

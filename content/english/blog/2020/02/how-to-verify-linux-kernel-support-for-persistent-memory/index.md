@@ -10,6 +10,8 @@ tags:
   - "pmem"
 image: "images/pexels-photo-416322.jpeg"
 author: Steve Scargall
+aliases:
+  - /blog/2020/02/11/how-to-verify-linux-kernel-support-for-persistent-memory/
 ---
 
 Linux Kernel support for persistent memory was first delivered in version 4.0 of the mainline kernel, however, it was not enabled by default until version 4.2.

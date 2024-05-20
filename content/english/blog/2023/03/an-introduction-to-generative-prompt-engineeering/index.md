@@ -19,6 +19,10 @@ categories = ["AI"]
 # Featured Image
 image = "images/95d33778-4653-4b03-b927-e91884440d9b.jpeg"
 author = "Steve Scargall"
+
+aliases = [
+    "/blog/2023/03/29/an-introduction-to-generative-prompt-engineeering/"
+]
 +++
 
 ## Introduction
