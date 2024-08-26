@@ -3,7 +3,7 @@ title: "How Much RAM Could a Vector Database Use If a Vector Database Could Use 
 meta_title: "Scaling Vector Databases: RAM Usage, Retrieval Optimization, and CXL Memory Expansion"
 description: "Explore the memory requirements of vector databases in LLM solutions. Learn how to estimate RAM usage, manage memory limits, and utilize storage options in Qdrant. Discover how CXL memory expansion can boost performance, maintain low latency, and improve retrieval in LLMs."
 date: 2024-08-24T00:00:00Z
-image: "vector_database_ram_usage.webp"
+image: "featured_image.webp"
 categories: ["Machine Learning", "Vector Databases"]
 author: "Steve Scargall"
 tags: ["LLM", "Vector Databases", "Qdrant", "Memory Management", "CXL"]
