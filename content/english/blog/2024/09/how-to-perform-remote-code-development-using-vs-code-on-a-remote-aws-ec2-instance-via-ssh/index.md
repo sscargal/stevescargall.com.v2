@@ -3,14 +3,13 @@ title: "Remote Development Using VS Code and SSH with AWS EC2"
 meta_title: "How to Set Up Remote Development on AWS EC2 with VS Code Using SSH"
 description: "Learn how to set up remote development on an AWS EC2 instance using Visual Studio Code and SSH. This guide provides detailed steps to connect via SSH and start coding remotely on EC2 with ease."
 date: 2024-09-09T00:00:00Z
-image: "./assets/featured_image.webp"
+image: "featured_image.webp"
 categories: ["Development", "Cloud Computing"]
 author: "Steve Scargall"
 tags: ["VS Code", "AWS EC2", "Remote Development", "SSH"]
 draft: false
 aliases:
 ---
-
 
 # How to Perform Remote Code Development Using VS Code on a Remote AWS EC2 Instance via SSH
 
