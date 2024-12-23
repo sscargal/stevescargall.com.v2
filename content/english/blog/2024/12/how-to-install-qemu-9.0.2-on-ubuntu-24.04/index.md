@@ -4,7 +4,7 @@ meta_title: "A Step-by-Step Guide on Using Cloud Images with QEMU 9.0.2 on Ubunt
 description: "This guide provides detailed steps on how to to install and configure Ubuntu Cloud Images with QEMU."
 date: 2024-12-23T00:00:00Z
 image: "featured_image.webp"
-categories: ["CXL"]
+categories: ["How To", "Linux"]
 author: "Steve Scargall"
 tags: ["QEMU", "Linux", "Remote Development", "SSH", "Ubuntu"]
 draft: false
