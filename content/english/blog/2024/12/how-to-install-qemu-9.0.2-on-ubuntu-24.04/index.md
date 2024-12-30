@@ -102,19 +102,17 @@ Create a `user-data.yaml` file with your desired user configuration. Here is an 
 ```bash
 cat > user-data.yaml <<EOF
 #cloud-config
-
 ssh_pwauth: True
+chpasswd:
+  expire: false
+  users:
+  - {name: ubuntu, password: mypassword, type: text}
 users:
   - name: ubuntu
     groups: users, sudo
     shell: /usr/bin/bash
     ssh_authorized_keys:
-      - ssh-rsa AAAAB3Nza ... your_email@example.com # Replace with your SSH public key
-
-chpasswd:
-  list: |
-    ubuntu:mypassword
-  expire: False
+      - ssh-rsa AAAAB3Nz... # Paste Your SSH Public Key Here
 EOF
 ```
 
