@@ -1,11 +1,11 @@
 ---
-title: CXL 2024 Q4 Webinar - Breaking Memory Barriers: CXLs Game-Changing Impact on AI/ML
+title: CXL 2024 Q4 Webinar - Breaking Memory Barriers - CXLs Game-Changing Impact on AI/ML
 startDate: 2024-12-19  # Start date of the event
 endDate:     # End date of the event. Leave blank if the event is one day.
 taxonomy:
   - events  # Add your event category here
 location: Online Virtual  # Optional
-description: Steve hosted CXL Consortium Q4 2024 Webinar titled "Breaking Memory Barriers: CXL's Game-Changing Impact on AI/ML" 
+description: Steve hosted CXL Consortium Q4 2024 Webinar titled "Breaking Memory Barriers - CXL's Game-Changing Impact on AI/ML" 
 eventURL: https://www.brighttalk.com/webcast/17915/631961
 ---
 
