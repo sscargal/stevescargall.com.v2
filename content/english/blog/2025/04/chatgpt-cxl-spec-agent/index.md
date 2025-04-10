@@ -60,7 +60,8 @@ The **GPT Builder** will guide you through a conversation where you define what 
 
 When prompted, say something like:
 
-> “I want to create a GPT that can read and understand multiple versions of the CXL specification, including 1.0, 1.1, 2.0, 3.0, and 3.1. It should help users find differences between versions, answer questions about specific features, and explain sections in plain English.”
+> **NOTE** <br/>
+> I want to create a GPT that can read and understand multiple versions of the CXL specification, including 1.0, 1.1, 2.0, 3.0, and 3.1. It should help users find differences between versions, answer questions about specific features, and explain sections in plain English.
 
 Once you enter your goal, ChatGPT will take your input and suggest a basic personality or intent. This leads you into the **Configuration screen** where you’ll refine everything.
 
@@ -72,29 +73,14 @@ This is where the real customization happens. On the **Configure** tab, you can 
 
 Here's what each field means:
 
-**Name**
-Give your GPT a clear and concise name.  
-_Example: “CXL Specification Expert”_
+| **Field**          | **Description**                                                                 |
+|---------------------|---------------------------------------------------------------------------------|
+| **Name**           | Give your GPT a clear and concise name.<br><br>*Example: “CXL Specification Expert”* |
+| **Description**    | Write a one-liner that appears as the GPT’s tagline.<br><br>*Example: “Compares, explains, and explores CXL specs across versions 1.0 to 3.1”* |
+| **Instructions**   | This is the brain of your custom GPT. Give it a mission and guard rails.<br><br>*Example: “Acting as a CXL specification expert with expertise and detailed knowledge of the specifications across all major versions: 1.0, 1.1, 2.0, 3.0, and 3.1. You embody a professional demeanor, catering to a technical audience. Your role is to provide in-depth knowledge on Compute Express Link (CXL) to engineers and developers, ranging from basic to highly technical queries. Utilize the attached CXL specification documents for detailed answers and keep updated with the latest news and articles related to CXL from the Internet. Clarify vague questions to ensure precise and comprehensive responses. Explain complex sections in plain English, and answer technical questions. If the user doesn't tell you what version of the specification to look at or compare, assume the latest version. In your answers, provide references to the section(s) you found the information so the user can read that section. Your tone should be formal and authoritative, yet approachable, focusing on delivering accurate, up-to-date information while engaging users in a professional manner.”* |
+| **Conversation Starters** | These are quick prompts users will see on the main page when starting a chat with your GPT. Use them to highlight important tasks. You can have up to 5.<br><br>*Examples:*<br>- Compare CXL 2.0 and 3.0 memory pooling support.<br>- What changed between CXL 1.1 and 2.0?<br>- Explain the CXL.cache protocol in simple terms.<br>- Where is the DVSEC defined in CXL 3.1? |
 
-**Description**
-Write a one-liner that appears as the GPT’s tagline.  
-_Example: “Compares, explains, and explores CXL specs across versions 1.0 to 3.1”_
-
-**Instructions**
-This is the brain of your custom GPT. Give it a mission and guard rails.  
-_Example: “Acting as a CXL specification expert with expertise and detailed knowledge of the specifications across all major versions: 1.0, 1.1, 2.0, 3.0, and 3.1. You embody a professional demeanor, catering to a technical audience. Your role is to provide in-depth knowledge on Compute Express Link (CXL) to engineers and developers, ranging from basic to highly technical queries. Utilize the attached CXL specification documents for detailed answers and keep updated with the latest news and articles related to CXL from the Internet. Clarify vague questions to ensure precise and comprehensive responses. Explain complex sections in plain English, and answer technical questions. If the user doesn't tell you what version of the specification to look at or compare, assume the latest version. In your answers, provide references to the section(s) you found the information so the user can read that section. Your tone should be formal and authoritative, yet approachable, focusing on delivering accurate, up-to-date information while engaging users in a professional manner.”_
-
-**Conversation Starters**
-These are quick prompts users will see on the main page when starting a chat with your GPT. Use them to highlight important tasks. You can have up to 5.  
-_Examples:_
-
-- Compare CXL 2.0 and 3.0 memory pooling support.
-- What changed between CXL 1.1 and 2.0?
-- Explain the CXL.cache protocol in simple terms.
-- Where is the DVSEC defined in CXL 3.1?
-
-**Knowledge (Upload Files)**
-This is where you upload your CXL specification documents (PDFs). Just drag and drop or click **Upload Files** to add:
+**Knowledge (Upload Files)**: This is where you upload your CXL specification documents (PDFs). Just drag and drop or click **Upload Files** to add:
 
 - `CXL_Spec_1.0.pdf`
 - `CXL_Spec_1.1.pdf`
@@ -102,10 +88,10 @@ This is where you upload your CXL specification documents (PDFs). Just drag and 
 - `CXL_Spec_3.0.pdf`
 - `CXL_Spec_3.1.pdf`
 
-> Note: You can download the latest version of the CXL Specification from the [Compute Express Link - Specification](https://computeexpresslink.org/cxl-specification/) page. If you need to download older versions, you will need to login as a member of the CXL Consortium.
+> **NOTE** <br/>
+> You can download the latest version of the CXL Specification from the [Compute Express Link - Specification](https://computeexpresslink.org/cxl-specification/) page. If you need to download older versions, you will need to login as a member of the CXL Consortium.
 
-**Capabilities**
-You can toggle optional tools for your GPT here:
+**Capabilities**: You can toggle optional tools for your GPT here:
 
 - **Web Search** for live internet queries (enable for exploring outside context)
 - **Canvas** for enhanced interaction with code and ideas related to your chat session
