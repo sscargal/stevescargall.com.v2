@@ -121,6 +121,10 @@ ChatGPT will build your custom GPT in a few seconds.
 
 Now that your GPT is live, select if from your list on the top left and start chatting.
 
+Here's a great example:
+
+![Example Chat Response](./example_result.png)
+
 ## Tips to Get the Most Out of Your Custom GPT
 
 - **Refine your prompt** if you’re not getting the exact answer.
