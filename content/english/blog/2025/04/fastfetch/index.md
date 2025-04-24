@@ -3,7 +3,7 @@ title: "Fastfetch: The Speedy Successor Neofetch Replacement Your Ubuntu Termina
 meta_title: "Fastfetch: The Speedy Successor Neofetch Replacement Your Ubuntu Terminal Needs"
 description: "Learn two methods (direct DEB download or PPA) to install the latest version of Fastfetch, a fast and modern Neofetch alternative, on Ubuntu 22.04 LTS or newer"
 date: 2025-04-24T00:00:00Z
-image: "featured-image.webp"
+image: "featured_image.webp"
 categories: ["Linux", "Ubuntu", "How To"]
 author: "Steve Scargall"
 tags: ["fastfetch", "neofetch", "ubuntu", "ubuntu 22.04", "linux", "terminal", "system information", "tutorial"]
