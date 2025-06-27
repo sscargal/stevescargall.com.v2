@@ -4,7 +4,7 @@ meta_title: "CXL Server Buyer's Guide: GA Vendor & Model List (2025)"
 description: "Your complete buyer's guide to generally available (GA) CXL servers. Compare models, specs, and CXL features from top vendors like Dell, HPE, Lenovo, and Supermicro."
 date: 2025-06-27T16:35:01Z
 image: "featured_image.webp"
-categories: ["CXL", Servers", "Data Center"]
+categories: ["CXL", "Servers", "Data Center"]
 author: "Steve Scargall"
 tags: ["CXL", "Servers", "Buyer's Guide", "Intel", "AMD", "Dell", "HPE", "Lenovo", "Supermicro", "Data Center", "CXL 2.0", "CXL 1.1", "CXL 1.0", "CXL 3.0"]
 draft: false
