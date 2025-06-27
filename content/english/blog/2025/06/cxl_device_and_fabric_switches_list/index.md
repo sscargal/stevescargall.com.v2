@@ -3,7 +3,7 @@ title: "CXL Device & Fabric Buyer's Guide: A List of GA Components (2025)"
 meta_title: "CXL Device & Fabric Buyer's Guide: GA Memory, Switches & Appliances"
 description: "The definitive buyer's guide to CXL devices and fabric components. Compare GA CXL memory modules, switches, appliances, and retimers from major industry vendors."
 date: 2025-06-27T17:15:01Z
-image: "cxl-device-featured-image.webp"
+image: "featured_image.webp"
 categories: ["Data Center", "Hardware"]
 author: "Steve Scargall"
 tags: ["CXL", "CXL Devices", "Memory", "Switches", "Retimers", "Samsung", "Micron", "H3 Platform", "Enfabrica", "Buyer's Guide"]
