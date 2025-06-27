@@ -52,6 +52,7 @@ CXL 2.0 introduces switching capabilities, enabling memory pooling and the creat
 | **KAYTUS**     | KR2280V3             | Intel / AMD | 2U              | Yes                        | 2.0         | E3.S, AIC          | [Link](https://www.kaytus.com/products/servers/rack-servers/kr2280v3) |
 | **Lenovo**     | ThinkSystem SR650 V4 | Intel       | 2U              | Yes, up to 8x single-width | 2.0         | E3.S, AIC          | [Product](https://www.lenovo.com/us/en/p/servers-storage/servers/racks/thinksystem-sr650-v4/len102s0061)<br />[Press Release](https://lenovopress.lenovo.com/lp2127-thinksystem-sr650-v4-server) |
 | **MSI**        | S2301                | AMD         | 2U              | No                         | 2.0         | E3.S               | [Link](https://www.msi.com/Enterprise-Server/S2301-CXL-Memory-Expansion-Server) |
+| **Penguin Solutions**        | Altus XE4318GT-CXL                | AMD         | 4U              | Yes, up to 8x double-width | 2.0         | AIC               | [Link](https://www.penguinsolutions.com/en-us/products/cxl-memory-expansion-servers) |
 | **Supermicro** | AS -2125HS-TNR       | AMD         | 2U              | Yes, up to 4x double-width | 2.0         | AIC                | [Link](https://www.supermicro.com/en/products/system/h13/2u/as-2125hs-tnr) |
 
 ## CXL 1.1 Servers
