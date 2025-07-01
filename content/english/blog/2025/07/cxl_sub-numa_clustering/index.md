@@ -6,7 +6,7 @@ date: 2025-07-01T16:44:00-06:00
 image: "featured_image.webp"
 categories: ["Linux", "CXL"]
 author: "Steve Scargall"
-tags: ["CXL", "NUMA", "SNC", "Sub-NUMA Clustering", "Sub-NUMA Cluster", "Intel", Linux", "daxctl", "system-ram", "sysfs", "Memory Management"]
+tags: ["CXL", "NUMA", "SNC", "Sub-NUMA Clustering", "Sub-NUMA Cluster", "Intel", "Linux", "daxctl", "system-ram", "sysfs", "Memory Management"]
 draft: false
 aliases:
 ---
