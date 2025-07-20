@@ -1,6 +1,6 @@
 ---
-title: "How to Confirm Virtual to Physical Memory Mappings for PMem and DRAM With Python and C"
-meta_title: "Linux: Confirm Persistent Memory (PMem) Virtual to Physical Mappings With Python and C"
+title: "How to Confirm Virtual to Physical Memory Mappings for PMem and FSDAX Files"
+meta_title: "Linux: Confirm Persistent Memory (PMem) Virtual to Physical Mappings"
 description: "Learn how to verify, at the page level, whether your files are physically mapped to Persistent Memory (PMem) or DRAM on Linux. This guide includes both Python and C scripts to test and visualize memory mappings on DAX/FSDAX and non-DAX storage."
 date: 2025-07-19T00:00:00-06:00
 image: "featured_image.webp"
