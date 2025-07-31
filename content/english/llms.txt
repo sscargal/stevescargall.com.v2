@@ -5,15 +5,11 @@
 Steve Scargall shares unique perspectives on technology trends, creative explorations, and practical how-to guides. The site showcases a blend of thought leadership, hands-on tutorials, published works, and inventive projects involving Linux systems, and hardware-software co-design. Emphasizing open source principles and innovations in memory hierarchy, memory coherency protocols, and system software architecture. The content also delves into responsible AI practices, prompt engineering, fine-tuning, explainable AI, and the latest advances in multimodal AI and AI safety. These resources provide valuable insights for tech enthusiasts and professionals working in computing, software development, AI innovation, and hardware design.
 
 ## Core Content
-- [Blog](https://stevescargall.com/): A journey through Steve’s thoughts on technology, creativity, and innovation.
-- [Books & Publications](https://stevescargall.com/books-publications): A curated list of authored works including academic papers, guides, and featured articles.
-- [The Mad Lab](https://stevescargall.com/the-mad-lab): Showcasing software, hardware projects, DIY guides, and GitHub repositories.
-- [Conferences and Events](https://stevescargall.com/conferences-events): Presentations, panel discussions, and innovative demos delivered by Steve at industry events.
+- [Blog](https://stevescargall.com/blog): A journey through Steve’s thoughts on technology, creativity, and innovation.
+- [Books & Publications](https://stevescargall.com/books): A curated list of authored books.
+- [The Mad Lab](https://stevescargall.com/the-mad-lab): Showcasing personal projects including software, hardware projects, DIY guides, and GitHub repositories.
+- [Conferences and Events](https://stevescargall.com/conferences-events): A list of presentations, panel discussions, and innovative demos delivered by Steve at industry events.
 
 ## Important Resources
 - [About](https://stevescargall.com/about): Background information about Steve Scargall and the mission of the site.
 - [Contact](https://stevescargall.com/contact): Details for reaching out with questions or collaboration interests.
-
-## Optional
-- [Tutorials and Guides](https://stevescargall.com/tutorials): Step-by-step tutorials on various technical topics.
-- [Featured Articles](https://stevescargall.com/featured-articles): Selected articles highlighting innovative ideas and industry insights.
