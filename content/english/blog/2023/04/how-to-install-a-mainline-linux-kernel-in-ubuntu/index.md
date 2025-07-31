@@ -12,12 +12,20 @@ aliases:
     - /blog/04/13/how-to-install-a-mainline-linux-kernel-in-ubuntu/
 ---
 
+> Note: This article was updated on Thursday, July 31st, 2025 and will work with newer Ubuntu releases.
+
 By default, Ubuntu systems run with the Ubuntu kernels provided by the Ubuntu repositories. To get unmodified upstream kernels that have new features or to confirm that upstream has fixed a specific issue, we often need to install the mainline Kernel. The mainline kernel is the most recent version of the Linux kernel released by the Linux Kernel Organization. It undergoes several stages of development, including merge windows, release candidates, and final releases. Mainline kernels are designed to offer the latest features and improvements, making them attractive to developers and power users. [Kernel.org](https://www.kernel.org/) lists the available Kernel versions. 
 
 To install the mainline kernel, we need a package called [mainline](https://github.com/bkw777/mainline?ref=learnubuntu.com) available from the cappelikan personal package archive (PPA). To add PPA for the mainline package, use the following command:
 
 ```bash
 sudo add-apt-repository ppa:cappelikan/ppa
+```
+
+Ensure `pkexec` is installed:
+
+```bash
+sudo apt install pkexec
 ```
 
 Run the following commands to update the repository and install the mainline utility:
