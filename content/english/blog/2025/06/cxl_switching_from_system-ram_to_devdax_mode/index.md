@@ -11,7 +11,7 @@ draft: false
 aliases:
 ---
 
-As a Linux System Administrator working with Compute Express Link (CXL) memory devices, you should be aware that as of Linux Kernel 6.3, Type 2 CXL.mem devices are now automatically brought online as memory-only NUMA nodes. While this can be beneficial for most situations, it might not be ideal if your application is designed to directly manage the CXL memory as a DAX (Direct Access) device using `mmap()`.
+As a Linux System Administrator working with Compute Express Link (CXL) memory devices, you should be aware that as of Linux Kernel 6.3, Type 3 CXL.mem devices are now automatically brought online as memory-only NUMA nodes. While this can be beneficial for most situations, it might not be ideal if your application is designed to directly manage the CXL memory as a DAX (Direct Access) device using `mmap()`.
 
 This blog post will explain this behavior and provide a step-by-step guide on how to convert a CXL memory device from a memory-only NUMA node back to DAX mode, allowing applications to `mmap` the underlying `/dev/daxX.Y` device. We'll also cover troubleshooting steps if the memory is actively in use by the kernel or other processes.
 
