@@ -11,7 +11,7 @@ draft: false
 aliases: []
 ---
 
-[OrcaSlicer](https://www.orcaslicer.com/) is a powerful and popular slicer for 3D printers, known for its rich feature set and active development community. In this blog post, we'll take a closer look at a new feature I wrote that provides more insight into your prints: the display of total travel distance and the number of travel moves.
+[OrcaSlicer](https://www.orcaslicer.com/) is a powerful and popular slicer for 3D printers, known for its rich feature set and active development community. In this blog post, we'll take a closer look at a new feature I proposed and implemented that provides more insight into your prints: the display of total travel distance and the number of travel moves. See the [feat: Display travel distance and move count in G-code summary](https://github.com/OrcaSlicer/OrcaSlicer/pull/11187) for more details.
 
 ## Why Care About Travel Moves?
 
@@ -24,6 +24,20 @@ As a DIYer, 10 to 30 minutes here and there saved on travel moves it's a big dea
 Until now, there was no way to get a clear picture of the total travel distance and the number of travel moves in a print. Slicers already display the amount of wallclock time consumed by travel moves and as a percentage of the overall print time, but don't show the total distance - in metres or feet/inches - or number of independent movement operations, making it challenging to assess the impact of different slicer settings on travel efficiency. The code was already there to calculate this information, but it wasn't being surfaced to the user.
 
 I'm not the first to think about this problem, but I wanted to take a hands-on approach to solving it. See [Feature Request - Tool path odometer](https://github.com/SoftFever/OrcaSlicer/discussions/5269) for prior discussion.
+
+## Why Distance AND Segments Matter
+
+If we only show the total distance traveled, we lose information. It's a Traveling Salesman Problem (TSP) where distance and segments are important.
+
+This metric can be quite valuable for users, including, but not limited to:
+
+*   **Print Time Optimization**: Every travel move adds non-printing time to the print. A higher segment count means more time spent moving without extruding, so users aiming for faster prints can use this information to adjust the model or settings for more efficiency.
+*   **Potential for Print Defects**: Beyond stringing, a high number of travel moves can contribute to issues like blobs or zits, where the nozzle starts and stops may leave marks on the model. Monitoring segment counts helps users identify when a model or slicer setting might be causing excessive starts and stops.
+*   **Nozzle Path Planning**: Users might want to evaluate whether the slicer is generating efficient toolpaths. An unusually high number of travels may indicate inefficient routing, which can be improved by adjusting model orientation or slicer settings.
+*   **Increased Wear & Maintenance**: More rapid and frequent moves can increase wear on printer mechanisms over time. Users tracking segment counts can anticipate maintenance needs or adjust their print settings to reduce unnecessary movement.
+*   **Layer Changes**: Segment count can correlate with the number of layer changes or complex features in a model, which is useful for troubleshooting or refining designs with intricate geometries.
+
+For anyone working on new algorithms or updating/tuning existing ones, the segment count helps to compare the results. The segment metric is critical when training AI models using reinforcement learning. This was my original goal/desire for this PR.
 
 ## Implementing the Odometer Feature
 
