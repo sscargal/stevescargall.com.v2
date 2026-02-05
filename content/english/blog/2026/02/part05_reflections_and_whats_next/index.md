@@ -3,12 +3,15 @@ title: "Reflections and What's Next: Lessons from Building lib3mf-rs"
 meta_title: "Reflections and What's Next: Lessons from Building lib3mf-rs"
 date: 2026-02-05T13:05:00-06:00
 description: "What we learned building a comprehensive 3MF library, and an invitation to join the journey"
+image: "featured_image.webp"
 categories: ["3D Printing"]
 author: "Steve Scargall"
 tags: ["3D Printing", "Rust", "3MF", "Open Source"]
 series: "lib3mf-rs"
 part: 5
 reading_time: 4
+draft: false
+
 ---
 
 On February 4th, 2026, lib3mf-rs is a published open-source project with complete specification coverage, available for anyone to use.
