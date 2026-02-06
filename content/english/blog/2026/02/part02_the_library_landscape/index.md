@@ -14,7 +14,17 @@ part: 2
 reading_time: 4
 ---
 
-"Why not just use the existing library?"
+## Series: Building lib3mf-rs
+
+This post is part of a 5-part series on building a comprehensive 3MF library in Rust:
+
+1. [Part 1: My Journey Building a 3MF Native Rust Library from Scratch](<{{< relref "/blog/2026/02/part01_building_a_3MF_rust_library/index.md" >}}>)
+2. [Part 2: The Library Landscape - Why Build Another One?](<{{< relref "/blog/2026/02/part02_the_library_landscape/index.md" >}}>)
+3. [Part 3: Into the 3MF Specification Wilderness - Reading 1000+ Pages of Specifications](<{{< relref "/blog/2026/02/part03_into_the_spec_wilderness/index.md" >}}>)
+4. [Part 4: Design for Developers - Features, Flags, and the CLI](<{{< relref "/blog/2026/02/part04_design_for_developers/index.md" >}}>)
+5. [Part 5: Reflections and What's Next - Lessons from Building lib3mf-rs](<{{< relref "/blog/2026/02/part05_reflections_and_whats_next/index.md" >}}>)
+
+## "Why not just use the existing library?"
 
 It's a fair question. One I asked myself many times during the early days of this project. The 3MF Consortium maintains [lib3MF](https://github.com/3MFConsortium/lib3mf), a comprehensive C++ implementation used by major companies in additive manufacturing. Why build another one?
 
