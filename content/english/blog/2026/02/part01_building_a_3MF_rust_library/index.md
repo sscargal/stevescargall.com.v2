@@ -1,6 +1,6 @@
 ---
-title: "Part 1: My Journey Building a 3MF Native Rust Library from Scratch"
-meta_title: "Part 1: My Journey Building a 3MF Native Rust Library from Scratch"
+title: "My Journey Building a 3MF Native Rust Library from Scratch"
+meta_title: "My Journey Building a 3MF Native Rust Library from Scratch"
 description: "How adding a travel distance feature to OrcaSlicer sparked a journey into building a comprehensive 3MF library in Rust"
 date: 2026-02-01T13:05:00-06:00
 image: "featured_image.webp"
@@ -21,6 +21,16 @@ As a software engineer, I'm naturally drawn to the software side of things (Slic
 About three months ago (Oct'25), I had successfully submitted a [travel distance feature to OrcaSlicer](https://stevescargall.com/blog/2025/10/i-added-a-feature-to-orcaslicer-to-show-travel-distance-and-moves/). It was my first contribution to a major 3D printing project, and I was thrilled to see how it would be accepted and used by others.
 
 Most modern slicers use 3MF files to store the 3D model and its associated data. This format is everywhere in the 3D printing world. Yet I realized I only understood the surface of what these files contained. I wanted to understand 3MF deeply, not just use it.
+
+## Series: Building lib3mf-rs
+
+This post is part of a 5-part series on building a comprehensive 3MF library in Rust:
+
+1. [Part 1: My Journey Building a 3MF Native Rust Library from Scratch](<{{< relref "/blog/2026/02/part01_building_a_3MF_rust_library/index.md" >}}>)
+2. [Part 2: The Library Landscape - Why Build Another One?](<{{< relref "/blog/2026/02/part02_the_library_landscape/index.md" >}}>)
+3. [Part 3: Into the 3MF Specification Wilderness - Reading 1000+ Pages of Specifications](<{{< relref "/blog/2026/02/part03_into_the_spec_wilderness/index.md" >}}>)
+4. [Part 4: Design for Developers - Features, Flags, and the CLI](<{{< relref "/blog/2026/02/part04_design_for_developers/index.md" >}}>)
+5. [Part 5: Reflections and What's Next - Lessons from Building lib3mf-rs](<{{< relref "/blog/2026/02/part05_reflections_and_whats_next/index.md" >}}>)
 
 ## The Curiosity That Started Everything
 
@@ -119,7 +129,7 @@ From curiosity to contribution.
 
 ---
 
-**Next in this series**: [Part 2: The Library Landscape - Why Build Another One?](#)
+**Next in this series**: [Part 2: The Library Landscape - Why Build Another One?]({{< relref "../part02_the_library_landscape/index.md" >}})
 
 **Resources**:
 - [lib3mf-rs on GitHub](https://github.com/sscargal/lib3mf-rs)

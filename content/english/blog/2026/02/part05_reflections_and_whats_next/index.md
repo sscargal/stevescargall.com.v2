@@ -14,6 +14,16 @@ draft: false
 
 ---
 
+## Series: Building lib3mf-rs
+
+This post is part of a 5-part series on building a comprehensive 3MF library in Rust:
+
+1. [Part 1: My Journey Building a 3MF Native Rust Library from Scratch](<{{< relref "/blog/2026/02/part01_building_a_3MF_rust_library/index.md" >}}>)
+2. [Part 2: The Library Landscape - Why Build Another One?](<{{< relref "/blog/2026/02/part02_the_library_landscape/index.md" >}}>)
+3. [Part 3: Into the 3MF Specification Wilderness - Reading 1000+ Pages of Specifications](<{{< relref "/blog/2026/02/part03_into_the_spec_wilderness/index.md" >}}>)
+4. [Part 4: Design for Developers - Features, Flags, and the CLI](<{{< relref "/blog/2026/02/part04_design_for_developers/index.md" >}}>)
+5. [Part 5: Reflections and What's Next - Lessons from Building lib3mf-rs](<{{< relref "/blog/2026/02/part05_reflections_and_whats_next/index.md" >}}>)
+
 On February 4th, 2026, lib3mf-rs is a published open-source project with complete specification coverage, available for anyone to use.
 
 - **Github**: [https://github.com/sscargal/lib3mf-rs](https://github.com/sscargal/lib3mf-rs)
