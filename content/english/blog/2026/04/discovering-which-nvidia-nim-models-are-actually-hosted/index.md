@@ -3,7 +3,7 @@ title: "Using the API to Find Free Hosted Models on NVIDIA Builder"
 meta_title: "How to Find Free Hosted Models on NVIDIA Builder Using the API"
 description: "Learn how to programmatically discover which NVIDIA NIM models have free hosted endpoints using a Bash script that probes the /v1/chat/completions API. Includes setup, API key instructions, and full source code."
 image: "featured_image.webp"
-date: 2026-04-06T21:00:00-06:00
+date: 2026-04-06T12:00:00-06:00
 categories: ["AI"]
 author: "Steve Scargall"
 tags: ["NVIDIA", "NIM", "LLM", "Bash", "API", "NVIDIA Developer Program", "NVIDIA Builder", "free AI models", "chat completions"]
