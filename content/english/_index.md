@@ -4,14 +4,13 @@ banner:
   title: "Exploring the Intersection of Technology and Creativity"
   content: "These are the ramblings and thoughts of a single mind. Single bit errors are detected and corrected, double bit errors are detected and reported, and undetected errors are ignored."
   image: "/images/banner.png"
-  button:
-    enable: false
-    label: "Read my Blog"
-    link: "/blog"
-  button:
-    enable: false
-    label: "Visit the Mad Lab"
-    link: "/projects"
+  buttons:
+    - enable: false
+      label: "Read my Blog"
+      link: "/blog"
+    - enable: false
+      label: "Visit the Mad Lab"
+      link: "/projects"
 
 # Features
 features:
