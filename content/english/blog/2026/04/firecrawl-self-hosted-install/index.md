@@ -74,7 +74,7 @@ Follow Steps 1–11 below. You'll run each command yourself, read the output, an
 
 ### Option 2 — Let an AI agent install it for you
 
-A separate task file, `firecrawl-INSTALL.md`, is written specifically for AI coding agents. It describes the installation as a structured sequence of phases with explicit success criteria and pre-baked recovery steps for every known failure mode. Point your agent at it and let it handle the shell work while you supervise.
+A separate task file, [firecrawl-INSTALL.md](https://stevescargall.com/blog/2026/04/self-hosting-firecrawl-on-ubuntu-25.04-with-docker-compose/firecrawl-INSTALL.md), is written specifically for AI coding agents. Read this first to ensure you're happy running it on your system. It describes the installation as a structured sequence of phases with explicit success criteria and pre-baked recovery steps for every known failure mode. Point your agent at it and let it handle the shell work while you supervise.
 
 This approach has been tested with **Claude Code**, but any agent that can execute bash commands and read a Markdown task file will do. Copy and Paste the following prompt into your AI agent and let it run. It may ask you questions about your environment to help configure the installation.
 
