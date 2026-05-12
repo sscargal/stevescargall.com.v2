@@ -11,8 +11,6 @@ draft: false
 reading_time: 12
 ---
 
-# Graphify + MemMachine: 79× Token Reduction, Zero Vector Database
-
 I help maintain [MemMachine](https://github.com/MemMachine/MemMachine) — an open-source long-term memory layer for AI agents. It's a real codebase: 442 source files, 171 docs, a graph database, a SQL store, an MCP server, a REST API, a Python SDK, and integrations with eight different agent frameworks. When a new contributor asks "where does episodic memory actually get written?", grep, the tool of choice for many AI coding assistants, doesn't cut it. The answer threads through five files in three folders, plus a docker-compose service definition and a Helm chart. Each question you ask, it has to search all of these files, using the LLM to semantically understand the question and the files, then piece together an answer. This can take a lot of tokens and consume much of the context window. 
 
 That's the problem [Graphify](https://github.com/safishamsi/graphify) solves. One command turns the entire repository into a queryable knowledge graph — code, docs, PDFs, diagrams — and wires it into Claude Code so the assistant navigates by structure instead of grep. After a weekend of using it on MemMachine, I'm not going back. We're seeing 79x token reductions, and zero vector database needed. The graph updates on each commit, so it's always up to date.
