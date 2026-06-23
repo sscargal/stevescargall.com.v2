@@ -1,0 +1,110 @@
+---
+title: "Linux Kernel v6.15 is Released: This is What's New for Compute Express Link (CXL)"
+meta_title: "Linux Kernel v6.15 CXL & DAX Changes"
+description: "Explore Linux Kernel v6.15 CXL and DAX subsystem changes: 6 new features, 4 bug fixes, 9 cleanups, and 35 improvements across the CXL driver stack."
+date: 2025-05-25T00:00:00Z
+image: "featured_image.webp"
+categories: ["CXL"]
+author: "Steve Scargall"
+tags: ["CXL", "Linux", "Kernel"]
+draft: false
+aliases:
+---
+
+The Linux Kernel v6.15 release brings several improvements and additions related to Compute Express Link (CXL) technology.
+
+## Release Highlights
+
+Linux Kernel v6.15 includes **55 commits** to the CXL and DAX subsystems:
+
+| Category | Commits |
+|---|---|
+| New Features & Hardware | 6 |
+| Bug Fixes | 4 |
+| Performance | 1 |
+| Refactoring & Cleanup | 9 |
+| Other | 35 |
+
+The Linux v6.15 kernel marks a meaningful expansion of CXL's userspace interface story. The headline addition is FWCTL support: CXL devices can now expose get-feature and set-feature mailbox commands to userspace through the `fwctl` subsystem, giving operators and tooling a standardized RPC path to query and configure device-specific feature registers without requiring bespoke kernel drivers for each capability. This is the groundwork that enables feature negotiation at the management layer — expect CXL tooling to start consuming these interfaces quickly.
+
+On the reliability and platform integration side, v6.15 lands proper support for Global Persistent Flush (GPF), the CXL protocol mechanism that coordinates flush of dirty data across a fabric prior to power loss. The implementation introduces `cxl_gpf_get_dvsec()` to locate the GPF DVSEC capability block, and correctly gates port GPF timeout updates to only fire on first endpoint attachment — fixing a latent ordering issue caught during multi-device bringup. Separately, the first aliased address miscalculation in region setup is corrected, a bug that could produce incorrect DPA mappings in interleaved configurations.
+
+The release also continues a sustained internal cleanup arc. The `CXL_DECODER_MIXED` decoder type — an acknowledged design mistake — is removed entirely. DPA partition accounting is restructured around two new types, `cxl_dpa_partition` and `cxl_range_info`, replacing ad-hoc fields with a coherent data model. The ioctl dispatch path is refactored from the MDS-specific path back to the generic mailbox layer, and several functions drop open-coded `goto`-based locking patterns in favor of the `guard()` macro, reducing the surface area for lock-imbalance bugs. The `dax` subsystem drops its last direct `page->index` access, continuing the ongoing page-folio migration.
+
+### Key Changes
+
+- **FWCTL CXL Feature Command Interface**: A new `fwctl` RPC framework exposes CXL get-feature and set-feature mailbox commands to userspace, enabling structured, privilege-controlled access to device feature registers without custom kernel code per device.
+
+- **Global Persistent Flush (GPF) Support**: `cxl/pci` now discovers and programs GPF capability via the DVSEC, coordinating fabric-wide dirty data flush on impending power loss. A fix ensures port GPF timeout is only updated on first endpoint attachment, preventing races during multi-device enumeration.
+
+- **DPA Partition Data Model Refactor**: `struct cxl_dpa_partition` and `struct cxl_range_info` replace scattered partition fields, giving the DPA allocator a cleaner type boundary and removing the stale unused values that were leaking into memdev logic.
+
+- **Region Aliased Address Fix**: An off-by-one in `cxl/region` caused the first aliased DPA address to be computed incorrectly in interleaved region setups, potentially producing wrong physical mappings. This is now corrected.
+
+- **Dirty Shutdown Count via Sysfs**: `cxl/pmem` exports the persistent dirty shutdown counter through sysfs, giving operators a direct path to inspect how many unclean shutdown events a persistent memory device has recorded — useful for wear tracking and RAS workflows.
+
+- **CXL_DECODER_MIXED Removal**: The mixed-type decoder variant, previously acknowledged as a design error in the decoder type enumeration, is fully excised. Code that depended on it is redirected to the correct typed decoders, tightening the state machine.
+
+- **Ioctl Path Consolidation**: The userspace ioctl dispatch is refactored away from the MDS-specific handler back to the shared mailbox path, reducing duplicated dispatch logic and making it easier to route new feature commands through a single entry point.
+
+- **DAX page->index Access Removal**: The final direct access to `page->index` in the DAX subsystem is removed, completing the incremental migration away from page-struct fields that are being repurposed during the folio conversion.
+
+## CXL related changes from Kernel v6.14 to v6.15
+
+Here is the detailed list of all commits merged into the 6.15 Kernel for CXL and DAX. This list was generated by the [Linux Kernel CXL Feature Tracker](https://github.com/sscargal/linux-cxl-tracker).
+
+- [cxl/core/regs.c: Skip Memory Space Enable check for RCD and RCH Ports](https://github.com/torvalds/linux/commit/078d3ee7c162cd66d76171579c02d7890bd77daf)
+- [cxl/feature: Update out_len in set feature failure case](https://github.com/torvalds/linux/commit/25174d5cd22f0977034892672a0287f7febcec1c)
+- [cxl: Fix devm host device for CXL fwctl initialization](https://github.com/torvalds/linux/commit/dc915672f9176799e48ac23a155f48742b15ec6c)
+- [cxl/pci: Drop the parameter is_port of cxl_gpf_get_dvsec()](https://github.com/torvalds/linux/commit/36aace15d9bdcfe6f03e078915067e89719478f5)
+- [cxl/pci: Update Port GPF timeout only when the first EP attaching](https://github.com/torvalds/linux/commit/6af941db6a60a27209bdb2da1a3a780574d617fe)
+- [cxl/core: Fix caching dport GPF DVSEC issue](https://github.com/torvalds/linux/commit/87d2de042c602e12230283cd40fa604b881e12f7)
+- [Merge tag 'cxl-for-6.15' of git://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl](https://github.com/torvalds/linux/commit/01ecadbe09b6c685de413ada8ba6688e9467c4b3)
+- [Merge tag 'driver-core-6.15-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core](https://github.com/torvalds/linux/commit/2cd5769fb0b78b8ef583ab4c0015c2c48d525dac)
+- [cxl/region: Fix the first aliased address miscalculation](https://github.com/torvalds/linux/commit/aae0594a7053c60b82621136257c8b648c67b512)
+- [cxl: Add support to handle user feature commands for set feature](https://github.com/torvalds/linux/commit/eb5dfcb9e36d0e46089fec777d911313c1876fa3)
+- [cxl: Add support to handle user feature commands for get feature](https://github.com/torvalds/linux/commit/5908f3ed6dc209e5c824e63afda7545805f75a7e)
+- [cxl: Add support for fwctl RPC command to enable CXL feature commands](https://github.com/torvalds/linux/commit/4d1c09cef2c244bd19467c016a3e56ba28ecc59d)
+- [cxl: Add FWCTL support to CXL](https://github.com/torvalds/linux/commit/858ce2f56b5253063f61f6b1c58a6dbf5d71da0b)
+- [Merge branch 'for-6.15/features' into cxl-for-next](https://github.com/torvalds/linux/commit/3b5d43245f0a56390baaa670e1b6d898772266b3)
+- [cxl/region: Quiet some dev_warn()s in extended linear cache setup](https://github.com/torvalds/linux/commit/74d9c59658e4d3b06f163da0c5ed7647656705c1)
+- [cxl: Fix warning from emitting resource_size_t as long long int on 32bit systems](https://github.com/torvalds/linux/commit/3d3e3b94440631179b7b6ffb1a64b944b27519c1)
+- [cxl/mem: Do not return error if CONFIG_CXL_MCE unset](https://github.com/torvalds/linux/commit/84f8b6e242deb997f2b32b4fc0895e8703704029)
+- [Merge branch 'for-6.15/extended-linear-cache' into cxl-for-next2](https://github.com/torvalds/linux/commit/763e15d04740ad2984bf009d9a5f70c099c8e6fd)
+- [Merge branch 'for-6.15/dirty-shutdown' into cxl-for-next2](https://github.com/torvalds/linux/commit/d781a45270a8acabe2576cc5c47dc33180eca87c)
+- [Merge branch 'for-6.15/guard_cleanups' into cxl-for-next2](https://github.com/torvalds/linux/commit/b6faa9c613787b894913638a76030018f6d62d54)
+- [cxl/pmem: Export dirty shutdown count via sysfs](https://github.com/torvalds/linux/commit/7d0ecc0bd83dc2b2f46087f955c9572073e45aca)
+- [cxl/pmem: Rename cxl_dirty_shutdown_state()](https://github.com/torvalds/linux/commit/86349aaaeacd6855914ee1b5a76ef0952fa134eb)
+- [cxl/pci: Introduce cxl_gpf_get_dvsec()](https://github.com/torvalds/linux/commit/021b7e42fa7bc2c30a4bf676355f1079aa0fe6be)
+- [cxl/pci: Support Global Persistent Flush (GPF)](https://github.com/torvalds/linux/commit/a52b6a2c1c997b5047a724ccde955910f6150a97)
+- [cxl/pmem: debug invalid serial number data](https://github.com/torvalds/linux/commit/2da9ad027e8094c0944b7dfc28c9e3db368d61cc)
+- [cxl/cdat: Remove redundant gp_port initialization](https://github.com/torvalds/linux/commit/e0feac20d150949dc8b74c1c5998dea70d19bf35)
+- [cxl/memdev: Remove unused partition values](https://github.com/torvalds/linux/commit/16ca2f5431ee7c003ae3ba3b0c4d4ddc57670b44)
+- [cxl/region: Drop goto pattern of construct_region()](https://github.com/torvalds/linux/commit/5ec67596e368cdddddd6770fc2dd2e577e82fbe8)
+- [cxl/region: Drop goto pattern in cxl_dax_region_alloc()](https://github.com/torvalds/linux/commit/9e7b7ab5af69aaa5cd027656529663407da61e6f)
+- [cxl/core: Use guard() to drop goto pattern of cxl_dpa_alloc()](https://github.com/torvalds/linux/commit/a81ebe7d19b6fdc6de0159878fbed9945120813e)
+- [cxl/core: Use guard() to drop the goto pattern of cxl_dpa_free()](https://github.com/torvalds/linux/commit/16fe6ec4ac3d828b3976bd36e4d99af73f8e43d2)
+- [cxl/memdev: cxl_memdev_ioctl() cleanup](https://github.com/torvalds/linux/commit/a58afda8bfd4a113295f0e12c0697c35a69614b2)
+- [cxl/core: cxl_mem_sanitize() cleanup](https://github.com/torvalds/linux/commit/3ad4f59f38965071e429ace93c75a94a2ede5456)
+- [cxl/core: Use guard() to replace open-coded down_read/write()](https://github.com/torvalds/linux/commit/eeba74747a6634c59887750efcf534b335899993)
+- [Merge branch 'for-6.15/fw-first-error-logging' into cxl-for-next2](https://github.com/torvalds/linux/commit/9387c6aec0b69cc9346b84838c04c6e550c016c1)
+- [cxl/pci: Add trace logging for CXL PCIe Port RAS errors](https://github.com/torvalds/linux/commit/02f4f0177d8e7647016fc29f11c1a7bb75bc2182)
+- [acpi/ghes, cxl/pci: Process CXL CPER Protocol Errors](https://github.com/torvalds/linux/commit/36f257e3b0ba904f5a4e7fa8dafaa60e88cdd28c)
+- [cxl: Add mce notifier to emit aliased address for extended linear cache](https://github.com/torvalds/linux/commit/516e5bd0b6bf4ae1ad072df637b428a737c3c870)
+- [cxl: Add extended linear cache address alias emission for cxl events](https://github.com/torvalds/linux/commit/8c520c5f1e767ed6b47feefca1ed32a097e9b707)
+- [acpi/hmat / cxl: Add extended linear cache support for CXL](https://github.com/torvalds/linux/commit/0ec9849b63338da7883440ed3f52757cd8c847b1)
+- [cxl: Setup exclusive CXL features that are reserved for the kernel](https://github.com/torvalds/linux/commit/a8b773f24203ef41162fc035944a82909a35f567)
+- [cxl/mbox: Add SET_FEATURE mailbox command](https://github.com/torvalds/linux/commit/14d502cc2718e6af44b575c95670292689a3ad65)
+- [cxl/mbox: Add GET_FEATURE mailbox command](https://github.com/torvalds/linux/commit/5e5ac21f629de796ab5d598b59c5e468c6fe4f95)
+- [cxl: Add Get Supported Features command for kernel usage](https://github.com/torvalds/linux/commit/f0e6a2329bf9d44138be2163370ae9537cbdaf74)
+- [cxl: Enumerate feature commands](https://github.com/torvalds/linux/commit/cbbca60a1efc1e8920be13d6bdaf3345ff49132f)
+- [cxl: Refactor user ioctl command path from mds to mailbox](https://github.com/torvalds/linux/commit/5666a7e7da2f003a8fc327d3c0cce0b506193d86)
+- [cxl/port: Constify 'struct bin_attribute'](https://github.com/torvalds/linux/commit/7de24e20a7aa83295e567982b0b29f3b53152759)
+- [cxl: Cleanup partition size and perf helpers](https://github.com/torvalds/linux/commit/58d60bbe0a99539afb1f29d03c28f06747f94531)
+- [cxl: Kill enum cxl_decoder_mode](https://github.com/torvalds/linux/commit/be5cbd0840275c68b3b7d0685d7acc26436c0d99)
+- [cxl: Make cxl_dpa_alloc() DPA partition number agnostic](https://github.com/torvalds/linux/commit/991d98f17d31644826977e49477544987000a08a)
+- [cxl: Introduce 'struct cxl_dpa_partition' and 'struct cxl_range_info'](https://github.com/torvalds/linux/commit/8e4c411c533f79407bbc970011aaa73ac602a9d1)
+- [cxl: Introduce to_{ram,pmem}_{res,perf}() helpers](https://github.com/torvalds/linux/commit/d77ca6c2b52508c0d2e673e801aec342e5cdbece)
+- [cxl: Remove the CXL_DECODER_MIXED mistake](https://github.com/torvalds/linux/commit/188e9529a606f35c57e34cf860b99bc2b191b5f4)
+- [device/dax: properly refcount device dax pages when mapping](https://github.com/torvalds/linux/commit/aed877c2b4257a25b2429f165542f86125871071)
+- [dax: remove access to page->index](https://github.com/torvalds/linux/commit/995abaaadd30e2f9e49127694d41403839d3e1bd)
