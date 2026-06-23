@@ -11,9 +11,9 @@ draft: false
 aliases:
 ---
 
-Linux 7.2's VFIO pull request quietly dropped a commit with a codename I hadn't seen before: **Blackwell-Next**. If you only read the Phoronix headline, it looks like a minor prep patch. It is — but it's also a clean window into where NVIDIA is taking its CPU-coherent GPU stack, how CXL is quietly becoming the standard signaling interface for next-generation accelerators, and what that means if you're building infrastructure or tooling on top of these platforms.
+Linux 7.2's VFIO pull request dropped a commit with a codename I hadn't seen before: **Blackwell-Next**. A Phoronix post brought this to my attention - [Linux 7.2 Begins Making Preparations For NVIDIA "Blackwell-Next"](https://www.phoronix.com/news/NVIDIA-Blackwell-Next-VFIO) - which, on the face of it looks like a minor prep patch. It is — but it's also a clean window into where NVIDIA is taking its CPU-coherent GPU stack, how CXL is quietly becoming the standard signaling interface for next-generation accelerators, and what that means if you're building infrastructure or tooling on top of these platforms.
 
-Let me walk through what actually changed, verified against the live kernel source.
+Let me walk through what actually changed and what's interesting about it.
 
 ## Background: The nvgrace-gpu VFIO Driver
 
@@ -51,11 +51,11 @@ Current supported hardware:
 | GB200 SKU   | 0x2941 | BAR0 register poll |
 | GB300 SKU   | 0x31C2 | probed at runtime (see below) |
 
-That last row is where Linux 7.2 comes in — and it's also where the "Blackwell-Next" question gets complicated.
+That last row is where Linux 7.2 comes in — and it's also where the "Blackwell-Next" question gets interesting.
 
 ## What "Blackwell-Next" Actually Changed
 
-The Phoronix article was published 2026-06-21. The commit landed three weeks earlier on 2026-06-02 as **`682ecb14e8`**, authored by Ankit Agrawal (NVIDIA), suggested by VFIO maintainer Alex Williamson, and reviewed by Kevin Tian (Intel). It touches exactly two files: `+163/-12` lines in `main.c` and `+1` line in `include/uapi/linux/pci_regs.h`.
+The Phoronix article was published 2026-06-21. The commit landed three weeks earlier on 2026-06-02 as **`682ecb14e8`**, authored by Ankit Agrawal (NVIDIA). It touches exactly two files: `+163/-12` lines in `main.c` and `+1` line in `include/uapi/linux/pci_regs.h`.
 
 Worth noting: GB300 (0x31C2) was **not** added by this commit. That happened 9 months earlier in a separate commit by Tushar Dave (`407aa63018`, 2025-09-25): *"GB300 is NVIDIA's Grace Blackwell Ultra Superchip."* The Blackwell-Next patch doesn't touch the device ID table at all.
 
@@ -74,7 +74,7 @@ nvdev->cxl_dvsec = pci_find_dvsec_capability(pdev, PCI_VENDOR_ID_CXL,
 
 Every subsequent branch in the driver checks `nvdev->cxl_dvsec`, not the PCI device ID. Any device registered in the driver's table that happens to expose a CXL Device DVSEC at probe time will take the CXL readiness path — without the driver needing to know the device ID in advance.
 
-GB300 (Grace Blackwell Ultra, 0x31C2) is the most recent device in the table. Ankit Agrawal — who wrote the Blackwell-Next patch — also reviewed the GB300 device ID commit 9 months earlier. The circumstantial evidence is strong that GB300 is what "Blackwell-Next" refers to. But the code doesn't state it, and Phoronix, VideoCardz, and WCCFTech all noted the uncertainty when covering this patch. I'll call GB300 the most likely candidate while being clear it's an inference, not a fact from the source.
+GB300 (Grace Blackwell Ultra, 0x31C2) is the most recent device in the table. Ankit Agrawal — who wrote the Blackwell-Next patch — also reviewed the GB300 device ID commit 9 months earlier. The circumstantial evidence is strong that GB300 is what "Blackwell-Next" refers to. But the code doesn't state it, and Phoronix, VideoCardz, and WCCFTech all noted the uncertainty when covering this patch.
 
 ### The Core Problem This Solves
 
@@ -206,7 +206,7 @@ If you're building accelerator management tooling on top of `nvgrace-gpu`, the `
 
 ## Speculating on Vera Rubin
 
-This is where I shift from "what the code says" to "what I think it means," so take it accordingly.
+This is where I shift from "what the code says" to "what I think it means," so take it with a pinch of salt.
 
 {{< figure src="vera-rubin-ces26.webp" caption="The NVIDIA Vera Rubin NVL72 rack system, announced at CES 2026. Vera CPU supports PCIe Gen6 and CXL 3.1 — the first NVIDIA CPU to list CXL. *Source: [NVIDIA Developer Blog](https://developer.nvidia.com/blog/inside-the-nvidia-rubin-platform-six-new-chips-one-ai-supercomputer/)*" >}}
 
@@ -218,16 +218,9 @@ The pattern this commit establishes is significant: `pci_find_dvsec_capability(p
 
 The P2P TODO comment becomes more actionable with Vera in view. CXL 3.1 includes a peer-to-peer DMA fabric specification. Once that lands in the kernel's CXL subsystem, those commented-out CXL P2P providers in `nvgrace_get_dmabuf_phys()` become the blueprint. With Vera natively supporting CXL 3.1, the upstream motivation to implement this grows substantially.
 
-My read on the current situation: the Blackwell-Next codename appears to mark the hardware generation where CXL DVSEC became the GPU memory readiness interface — moving away from proprietary BAR0 registers. Whether that's specifically GB300 or something not yet publicly named, the architectural direction is clear: NVIDIA is standardizing on the CXL protocol stack for these interfaces, and the kernel work is tracking that transition in real time.
+My read on the current situation: the Blackwell-Next codename appears to mark the hardware generation where CXL DVSEC became the GPU memory readiness interface — moving away from proprietary BAR0 registers. Whether that's specifically GB300, Vera Rubin, or something not yet publicly named, the architectural direction is clear: NVIDIA is standardizing on the CXL protocol stack for these interfaces, and the kernel work is tracking that transition in real time.
 
-## What to Watch For
-
-- A Vera+Rubin VFIO variant driver patch series in the Linux 7.3–8.0 timeframe, as hardware samples reach kernel developers
-- CXL P2P patches in the CXL subsystem — if these land, the commented-out provider code in `nvgrace_get_dmabuf_phys()` becomes the model
-- ACPI DSD property evolution — Vera's CXL 3.1 fabric-level addressing may need different firmware property names than `nvidia,gpu-mem-base-pa` / `nvidia,gpu-mem-size`
-- Other VFIO variant drivers adopting the `pci_find_dvsec_capability()` + CXL DVSEC detection pattern for their own next-generation hardware
-
-The commit itself is 175 lines. The implications are longer.
+The commit itself is 175 lines. The implications are longer. I'll be watching these commits more closely going forward and can't wait to get my hands on a system that has NVIDIA+CXL support.
 
 ---
 
