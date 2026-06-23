@@ -1,0 +1,86 @@
+---
+title: "Linux Kernel v6.17 is Released: This is What's New for Compute Express Link (CXL)"
+meta_title: "Linux Kernel v6.17 CXL & DAX Changes Explained"
+description: "Explore Linux Kernel v6.17 CXL and DAX subsystem updates: 22 general improvements, 6 bug fixes, 3 refactors, and new hardware support. What changed and why it matters."
+date: 2025-09-28T00:00:00Z
+image: "featured_image.webp"
+categories: ["CXL"]
+author: "Steve Scargall"
+tags: ["CXL", "Linux", "Kernel"]
+draft: false
+aliases:
+---
+
+The Linux Kernel v6.17 release brings several improvements and additions related to Compute Express Link (CXL) technology.
+
+## Release Highlights
+
+Linux Kernel v6.17 includes **32 commits** to the CXL and DAX subsystems:
+
+| Category | Commits |
+|---|---|
+| New Features & Hardware | 1 |
+| Bug Fixes | 6 |
+| Refactoring & Cleanup | 3 |
+| Other | 22 |
+
+The v6.17 cycle for CXL and DAX is a consolidation release rather than a feature-heavy one, with 32 commits that reflect the subsystem maturing around correctness, specification compliance, and architectural hygiene. The most visible theme is alignment with CXL specification revision 3.2: the Common Event Record has been updated to match the new spec, the Memory Sparing Event Record gains kernel tracing support for the first time, and additional validity checks land for corrected volatile memory error (CVME) counts in both DRAM and General Media Event Records. This work strengthens the kernel's ability to correctly interpret and surface CXL RAS events to userspace tooling and monitoring infrastructure.
+
+A quieter but structurally important change is the removal of `core/acpi.c` and the CXL core's direct dependency on ACPI. This decoupling makes the CXL core more portable and easier to reason about — the ACPI glue now lives where it belongs rather than being tangled into the driver core. Alongside this, the node-notifier migration replaces the older memory-notifier pattern, bringing CXL memory hotplug handling in line with current kernel conventions for NUMA-aware memory event signaling.
+
+Locking correctness receives explicit attention this cycle: both the conditional `rwsem` locking paths and the poison list mutex are converted to use `ACQUIRE()` semantics, ensuring proper memory ordering on architectures where weak ordering would otherwise permit reordering across these critical sections. Several targeted bug fixes round out the release, addressing a typo in the MCE notifier registration, an `ERR_PTR` vs `NULL` confusion in region handling, wrong DPA bounds checking for PPR operations in the EDAC path, and a format specifier mismatch for `u32` values.
+
+### Key Changes
+
+- **CXL Spec 3.2 Event Record Compliance**: The Common Event Record structure is updated to match CXL spec rev 3.2, and validity checks are added for CVME counts in both DRAM and General Media Event Records, ensuring the kernel correctly handles fields that older firmware may leave unset.
+
+- **Memory Sparing Event Record Tracing**: Kernel tracepoints are added for the CXL Memory Sparing Event Record, making sparing operations visible through the standard `trace_event` infrastructure — essential for diagnosing DRAM sparing activity on CXL memory devices in production.
+
+- **ACQUIRE() Locking Semantics**: Conditional `rwsem` acquisition paths and the poison list mutex are converted to use explicit `ACQUIRE()` ordering, fixing potential memory ordering hazards on weakly-ordered architectures without adding unnecessary full barriers.
+
+- **ACPI Dependency Removal from CXL Core**: `core/acpi.c` is removed and the CXL core's direct compile-time dependency on `CONFIG_ACPI` is eliminated, making the subsystem cleaner to build in non-ACPI environments and reducing coupling between platform firmware abstractions and driver internals.
+
+- **Node-Notifier Migration**: CXL switches from the legacy memory-notifier to the node-notifier interface for memory hotplug events, aligning with current kernel practice for NUMA-aware memory device management.
+
+- **`cxl_resource_contains_addr()` Helper**: A new helper function centralizes address-in-resource containment checks, replacing open-coded comparisons across the driver with a single, testable predicate — immediately used in the region probing path.
+
+- **EDAC PPR DPA Fix**: Incorrect DPA bounds checking in the EDAC path for Post Package Repair operations is corrected, preventing the driver from operating on wrong address ranges during repair sequences — a silent correctness bug with potential data integrity implications.
+
+- **Region Commit/Detach Consolidation**: `cxl_decoder_kill_region()` and `cxl_region_detach()` are merged into a single code path, eliminating duplicated teardown logic that was a maintenance hazard and a source of subtle divergence between the two flows.
+
+## CXL related changes from Kernel v6.16 to v6.17
+
+Here is the detailed list of all commits merged into the 6.17 Kernel for CXL and DAX. This list was generated by the [Linux Kernel CXL Feature Tracker](https://github.com/sscargal/linux-cxl-tracker).
+
+- [Merge tag 'mm-nonmm-stable-2025-08-03-12-47' of git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm](https://github.com/torvalds/linux/commit/e991acf1bce7a428794514cbbe216973c9c0a3c8)
+- [cxl: mce: fix typo "notifer"](https://github.com/torvalds/linux/commit/fbedfb051a4c74854c23f9c898fc6b29fab7be60)
+- [Merge tag 'cxl-for-6.17' of git://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl](https://github.com/torvalds/linux/commit/d41e5839d80043beaa63973eab602579ebdb238f)
+- [Merge tag 'mm-stable-2025-07-30-15-25' of git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm](https://github.com/torvalds/linux/commit/beace86e61e465dba204a268ab3f3377153a4973)
+- [Merge tag 'libnvdimm-for-6.17' of git://git.kernel.org/pub/scm/linux/kernel/git/nvdimm/nvdimm](https://github.com/torvalds/linux/commit/27152608dab9afe748d6b5fc3437a1831dac77c7)
+- [Merge tag 'driver-core-6.17-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/driver-core/driver-core](https://github.com/torvalds/linux/commit/22c5696e3fe029f4fc2decbe7cc6663b5d281223)
+- [Merge branch 'for-6.17/cxl-events-updates' into cxl-for-next](https://github.com/torvalds/linux/commit/3a32c5b3bb7d2dfad5fab94817f59e8963e2b1a6)
+- [cxl/region: Fix an ERR_PTR() vs NULL bug](https://github.com/torvalds/linux/commit/49d6e658e758e42aaff8ae5ecdd2d06b29abf53e)
+- [cxl/events: Trace Memory Sparing Event Record](https://github.com/torvalds/linux/commit/f10f46a0ee53420f707195fe33b7c235a1c0e48a)
+- [cxl/events: Add extra validity checks for CVME count in DRAM Event Record](https://github.com/torvalds/linux/commit/d8145bb8af5c09d27c4dde4f4030d589771594d1)
+- [cxl/events: Add extra validity checks for corrected memory error count in General Media Event Record](https://github.com/torvalds/linux/commit/cd3b36cfc659306456d3cf3714c8856307693c01)
+- [cxl/events: Update Common Event Record to CXL spec rev 3.2](https://github.com/torvalds/linux/commit/1f4f8166110f037f15a89c2203ff887b98a8393a)
+- [cxl: Fix -Werror=return-type in cxl_decoder_detach()](https://github.com/torvalds/linux/commit/3796f2985c267b90052613cf0b379e51c61e9367)
+- [Merge branch 'for-6.17/cxl-acquire' into cxl-for-next](https://github.com/torvalds/linux/commit/b873adfddeeb337fa8e9f381fd35eb94f7887f2f)
+- [cxl: Convert to ACQUIRE() for conditional rwsem locking](https://github.com/torvalds/linux/commit/d03fcf50ba56f4479685b951506422eeca230853)
+- [cxl/region: Consolidate cxl_decoder_kill_region() and cxl_region_detach()](https://github.com/torvalds/linux/commit/b3a88225519cfd05d71b99946d37476c941145b8)
+- [cxl/region: Move ready-to-probe state check to a helper](https://github.com/torvalds/linux/commit/695d9455af282056b53baf9782da5bcec3409a57)
+- [cxl/region: Split commit_store() into __commit() and queue_reset() helpers](https://github.com/torvalds/linux/commit/a235d7d963e82ac026eca968b71da376534dc9b9)
+- [cxl/decoder: Drop pointless locking](https://github.com/torvalds/linux/commit/55a89d9c99a9a79a7c2c7cb88c2ae9e86868a60b)
+- [cxl/decoder: Move decoder register programming to a helper](https://github.com/torvalds/linux/commit/7cb3b42a6bce4e604ca948e6ede543542b49fb54)
+- [cxl/mbox: Convert poison list mutex to ACQUIRE()](https://github.com/torvalds/linux/commit/683513084acb978fb7f401b9e4dce7e3866af172)
+- [cxl: Remove core/acpi.c and cxl core dependency on ACPI](https://github.com/torvalds/linux/commit/12b3d697c812aaf356e82d9e1f351fbb2ea97500)
+- [drivers,cxl: use node-notifier instead of memory-notifier](https://github.com/torvalds/linux/commit/41a9344bb732cf9af5d7a004a836754fa0e7cf56)
+- [cxl/core: Using cxl_resource_contains_addr() to check address availability](https://github.com/torvalds/linux/commit/bdf2d9fd3a86538b8c7368989248b857b5f1bcf1)
+- [cxl/edac: Fix wrong dpa checking for PPR operation](https://github.com/torvalds/linux/commit/03ff65c02559e8da32be231d7f10fe899233ceae)
+- [cxl/core: Introduce a new helper cxl_resource_contains_addr()](https://github.com/torvalds/linux/commit/5b6031c832c2747d58d3f0130098d965ef050b9a)
+- [cxl: Include range.h in cxl.h](https://github.com/torvalds/linux/commit/9f97e61bde6a91a429f48da1a461488a15b01813)
+- [cxl: make cxl_bus_type constant](https://github.com/torvalds/linux/commit/ac0fe6a5731700bcea6fecfd5d0b76c0454b3a20)
+- [cxl/edac: Use correct format specifier for u32 val](https://github.com/torvalds/linux/commit/d7b9056c3a6c58d41074b7ba19ab7fd34ce9f63e)
+- [cxl/pci: Replace mutex_lock_io() w mutex_lock() for mailbox access](https://github.com/torvalds/linux/commit/38b502e0a65215ddefaf84b672ec3908af97bacf)
+- [sysfs: treewide: switch back to attribute_group::bin_attrs](https://github.com/torvalds/linux/commit/fb506e31b3d52f7faaec00352c2732ce31c1f930)
+- [mm: remove callers of pfn_t functionality](https://github.com/torvalds/linux/commit/21aa65bf82a78c1e70447a45a85e533689b7f1a7)
