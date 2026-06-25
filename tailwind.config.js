@@ -69,15 +69,15 @@ module.exports = {
       fontSize: {
         base: font_base + "px",
         "base-sm": font_base * 0.8 + "px",
-        h1: h1 + "rem",
-        "h1-sm": h1 * 0.9 + "rem",
-        h2: h2 + "rem",
-        "h2-sm": h2 * 0.9 + "rem",
-        h3: h3 + "rem",
-        "h3-sm": h3 * 0.9 + "rem",
-        h4: h4 + "rem",
-        h5: h5 + "rem",
-        h6: h6 + "rem",
+        h1: "2.5rem",       // 40px  (was 47.8px)
+        "h1-sm": "2.25rem", // 36px  (was 43.0px)
+        h2: "1.75rem",      // 28px  (was 39.8px)
+        "h2-sm": "1.575rem",// 25.2px (was 35.8px)
+        h3: "1.5rem",       // 24px  (was 33.2px)
+        "h3-sm": "1.35rem", // 21.6px (was 29.9px)
+        h4: "1.25rem",      // 20px  (was 27.6px)
+        h5: "1.125rem",     // 18px  (was 23.0px)
+        h6: "1rem",         // 16px  (was 19.2px) — body text size, styled bold
       },
       fontFamily: {
         primary: [fontPrimary, fontPrimaryType],
